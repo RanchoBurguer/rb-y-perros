@@ -84,13 +84,6 @@ const PAYMENTS = [
     desc: 'Billetes en efectivo en Bs al retirar en el puesto',
     icon: 'cash',
     note: 'Al cambio de la tasa oficial'
-  },
-  {
-    id: 'punto',
-    name: 'Punto de Venta / Biopago',
-    desc: 'Tarjeta de débito en el puesto',
-    icon: 'card',
-    note: 'Válido para Retiro en el Puesto'
   }
 ];
 
@@ -143,7 +136,9 @@ const moneyUSD = (n) => `$${Number(n || 0).toFixed(2)}`;
 
 const moneyBs = (n, tasa = null) => {
   const currentTasa = tasa !== null ? Number(tasa) : (Number(APP.tasaBCV) || 875.65);
-  const bs = Number(n || 0) * currentTasa;
+  // Redondeo inteligente al múltiplo de 10 más cercano para evitar céntimos raros (ej: 998.24 -> 1000)
+  let bs = Number(n || 0) * currentTasa;
+  bs = Math.round(bs / 10) * 10;
   return `Bs. ${bs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 };
 
