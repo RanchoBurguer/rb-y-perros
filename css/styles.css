@@ -1506,21 +1506,240 @@ mark {
 }
 
 @media (max-width: 760px) {
-  /* Navbar móvil perfecto sin desbordamiento */
-  .nav { top: 10px; }
-  .nav__inner { padding: 0 10px 0 12px; gap: 8px; }
-  .brand { gap: 8px; }
-  .brand__logo-img { width: 34px; height: 34px; }
-  .brand__text { font-size: .95rem; }
+  /* Navbar móvil perfecto: ancho completo, sin desbordamiento ni cortes por curvas */
+  .nav {
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+  .nav .container, .nav__inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 0 16px 16px !important;
+    padding: 0 12px !important;
+    height: 56px !important;
+    box-sizing: border-box !important;
+    border-top: none !important;
+  }
+  .brand {
+    gap: 8px !important;
+    min-width: 0 !important;
+    flex-shrink: 1 !important;
+  }
+  .brand__logo-img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .brand__text {
+    font-size: .88rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
   .brand__slogan { display: none !important; }
   .nav__tasa { display: none !important; }
-  .nav__actions { gap: 6px; }
-  .icon-btn { width: 36px; height: 36px; }
-  .burger { width: 36px; height: 36px; }
-  .cart-btn { height: 38px; padding: 0 8px; gap: 6px; }
-  .cart-btn svg { width: 17px; height: 17px; }
-  .cart-btn__badge { min-width: 22px; height: 22px; font-size: .75rem; padding: 0 5px; }
+  .nav__actions {
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+  .icon-btn, .burger {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 50% !important;
+  }
+  .icon-btn svg { width: 16px !important; height: 16px !important; }
+  .cart-btn {
+    width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    position: relative !important;
+  }
+  .cart-btn svg { width: 17px !important; height: 17px !important; }
+  .cart-btn__label { display: none !important; }
+  .cart-btn__badge {
+    position: absolute !important;
+    top: -4px !important;
+    right: -4px !important;
+    min-width: 18px !important;
+    height: 18px !important;
+    padding: 0 4px !important;
+    font-size: .68rem !important;
+    font-weight: 800 !important;
+    border-radius: 99px !important;
+  }
 
+  /* Drawer móvil compacto y ajustado (evita que se vea gigante) */
+  .drawer {
+    width: 100% !important;
+    max-width: 100vw !important;
+    height: 100% !important;
+    height: 100dvh !important;
+    border-radius: 0 !important;
+  }
+  .drawer__head {
+    padding: 12px 14px !important;
+    min-height: 50px !important;
+    gap: 8px !important;
+  }
+  .drawer__head h2 {
+    font-size: 1.02rem !important;
+  }
+  .drawer__head .icon-btn, .drawer__backbtn {
+    width: 34px !important;
+    height: 34px !important;
+  }
+  .drawer__head .icon-btn svg, .drawer__backbtn svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  .drawer__body {
+    padding: 12px 12px 16px !important;
+    overscroll-behavior: contain !important;
+  }
+  .drawer__foot {
+    padding: 10px 12px 14px !important;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.3) !important;
+  }
+
+  /* Items del carrito compactos */
+  .cart-list { gap: 8px !important; }
+  .cline {
+    grid-template-columns: 46px 1fr auto !important;
+    gap: 8px !important;
+    padding: 8px 10px !important;
+    border-radius: 12px !important;
+  }
+  .cline img {
+    width: 46px !important;
+    height: 36px !important;
+    border-radius: 6px !important;
+  }
+  .cline__body strong {
+    font-size: .84rem !important;
+    line-height: 1.25 !important;
+  }
+  .cline__body small {
+    font-size: .72rem !important;
+  }
+  .cline__right {
+    gap: 4px !important;
+  }
+  .cline__right b {
+    font-size: .84rem !important;
+  }
+  .cline__del {
+    font-size: 1.1rem !important;
+    padding: 0 2px !important;
+  }
+  .stepper {
+    margin-top: 4px !important;
+    gap: 0 !important;
+  }
+  .stepper button {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: .95rem !important;
+  }
+  .stepper span {
+    min-width: 20px !important;
+    font-size: .78rem !important;
+  }
+
+  /* Zona y cupones */
+  .zone-row { margin-bottom: 10px !important; }
+  .zone-row label { font-size: .78rem !important; }
+  .zone-row select { padding: 8px 10px !important; font-size: .82rem !important; border-radius: 10px !important; }
+  .zone-hint { font-size: .74rem !important; margin-top: 4px !important; }
+  .coupon { gap: 6px !important; }
+  .coupon input { padding: 8px 12px !important; font-size: .8rem !important; height: 36px !important; }
+  .coupon button { padding: 0 12px !important; height: 36px !important; font-size: .78rem !important; }
+
+  /* Totales compactos */
+  .totals { margin: 8px 0 !important; }
+  .totals > div { padding: 2px 0 !important; font-size: .8rem !important; }
+  .totals__total {
+    margin-top: 4px !important;
+    padding-top: 6px !important;
+    font-size: .88rem !important;
+  }
+  .totals__total dd {
+    font-size: 1.1rem !important;
+  }
+  #toCheckout {
+    height: 44px !important;
+    padding: 0 16px !important;
+    font-size: .9rem !important;
+    border-radius: 99px !important;
+  }
+  .fineprint {
+    font-size: .68rem !important;
+    margin-top: 6px !important;
+  }
+
+  /* Formulario Checkout compacto */
+  .fieldset { margin-bottom: 12px !important; }
+  .fieldset legend { font-size: .74rem !important; margin-bottom: 8px !important; }
+  .field { margin-bottom: 10px !important; }
+  .field input {
+    padding: 14px 12px 6px !important;
+    font-size: .88rem !important;
+    border-radius: 10px !important;
+  }
+  .field label {
+    top: 11px !important;
+    left: 12px !important;
+    font-size: .82rem !important;
+  }
+  .field input:focus + label,
+  .field input:not(:placeholder-shown) + label {
+    transform: translateY(-7px) scale(.75) !important;
+  }
+  .check { font-size: .76rem !important; }
+
+  /* Métodos de Pago compactos */
+  .pays { gap: 6px !important; }
+  .pay {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+    border-radius: 10px !important;
+  }
+  .pay__ico {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 8px !important;
+  }
+  .pay__ico svg { width: 16px !important; height: 16px !important; }
+  .pay__body strong { font-size: .82rem !important; }
+  .pay__body small { font-size: .7rem !important; }
+  .pay__note { font-size: .62rem !important; padding: 2px 6px !important; }
+  .pay-note { padding: 8px 10px !important; font-size: .74rem !important; border-radius: 10px !important; }
+  .btn-copy-chip { padding: 2px 7px !important; font-size: .68rem !important; }
+
+  /* Submit y Ticket */
+  .checkout__submit { margin-top: 12px !important; padding-top: 10px !important; gap: 8px !important; }
+  .checkout__submit .btn--primary { height: 44px !important; padding: 0 16px !important; font-size: .88rem !important; }
+  .checkout__submit .btn--ghost { height: 36px !important; font-size: .78rem !important; }
+  .ticket__ok { width: 42px !important; height: 42px !important; margin-bottom: 8px !important; }
+  .ticket__ok svg { width: 20px !important; height: 20px !important; }
+  .ticket__head h3 { font-size: .98rem !important; }
+  .ticket__head p { font-size: .78rem !important; }
+  .ticket__text { padding: 10px 12px !important; font-size: .66rem !important; max-height: 200px !important; }
+  #waSend { height: 44px !important; font-size: .9rem !important; padding: 0 16px !important; }
+  .receipt { margin-top: 12px !important; padding: 10px !important; }
+  .receipt__head { gap: 8px !important; margin-bottom: 8px !important; }
+  .receipt__ico { width: 30px !important; height: 30px !important; }
+  .receipt__head h3 { font-size: .88rem !important; }
+  .receipt__text { padding: 8px 10px !important; font-size: .64rem !important; max-height: 200px !important; }
+  .ticket__minor { gap: 6px !important; margin-top: 8px !important; }
+  .ticket__minor .btn { font-size: .7rem !important; padding: 5px 8px !important; }
+
+  /* Resto del layout en móvil */
   .menu-grid, .bento, .bento--4, .steps { grid-template-columns: 1fr; }
   .metrics { grid-template-columns: 1fr 1fr; gap: 26px 16px; }
   .divider { display: none; }
@@ -1530,7 +1749,6 @@ mark {
   .consent__acts .btn { flex: 1; }
   .toasts { left: 12px; right: 12px; bottom: 12px; max-width: none; }
   .to-top { right: 12px; bottom: 12px; }
-  .drawer { width: 100%; }
 }
 
 @media (max-width: 640px) {
@@ -1542,11 +1760,11 @@ mark {
 }
 
 @media (max-width: 380px) {
-  .nav__inner { padding: 0 8px 0 10px; gap: 4px; }
-  .brand__text { font-size: .88rem; }
-  .brand__logo-img { width: 30px; height: 30px; }
-  .icon-btn, .burger { width: 32px; height: 32px; }
-  .cart-btn { height: 34px; padding: 0 6px; }
+  .nav .container, .nav__inner { padding: 0 8px !important; }
+  .brand__text { font-size: .84rem !important; }
+  .brand__logo-img { width: 28px !important; height: 28px !important; }
+  .icon-btn, .burger { width: 32px !important; height: 32px !important; }
+  .cart-btn { width: 34px !important; height: 34px !important; }
 }
 
 /* ---------- 20. BARRA FLOTANTE DE PEDIDO (MOBILE & DESKTOP) ---------- */
