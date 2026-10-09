@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Postre con caramelo">
+  <defs>
+    <linearGradient id="flanF" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fde6a8"/><stop offset="1" stop-color="#e8b850"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="100" cy="132" rx="58" ry="7" fill="#0f172a" opacity=".12"/>
+  <ellipse cx="100" cy="112" rx="60" ry="14" fill="#f2f5fa"/>
+  <ellipse cx="100" cy="108" rx="60" ry="14" fill="#ffffff" stroke="#dde2ee" stroke-width="2"/>
+  <path d="M56 108a44 40 0 0 1 88 0Z" fill="url(#flanF)"/>
+  <path d="M64 108a36 32 0 0 1 72 0Z" fill="#c9812e" opacity=".45"/>
+  <path d="M60 108h80a40 12 0 0 1-80 0Z" fill="#b9721d" opacity=".55"/>
+  <ellipse cx="86" cy="82" rx="10" ry="4" fill="#fff6dd" opacity=".6" transform="rotate(-20 86 82)"/>
+  <circle cx="124" cy="76" r="5" fill="#e0574f"/>
+  <path d="M124 78q-4 10 2 14" stroke="#7ab648" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>
