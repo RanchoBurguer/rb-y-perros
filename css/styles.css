@@ -548,6 +548,8 @@ main, .nav, .foot, .to-top { position: relative; z-index: 1; }
 .float-card--b { bottom: 8%; right: -24px; animation-delay: -3s; }
 .float-card b { font-family: var(--font-display); color: var(--a2); }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--a4); animation: pulse 2.4s infinite; }
+.dot--green { background: #22c55e !important; box-shadow: 0 0 10px rgba(34, 197, 94, 0.8) !important; }
+.dot--red { background: #ef4444 !important; box-shadow: 0 0 10px rgba(239, 68, 68, 0.8) !important; }
 @keyframes bob { 50% { transform: translateY(-13px); } }
 
 /* ---------- 8. BOTONES ---------- */
