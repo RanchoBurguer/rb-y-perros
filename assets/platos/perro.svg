@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Perro Caliente Caraqueño con Todo">
+  <defs>
+    <linearGradient id="bunTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FCD34D"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="sausage" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#DC2626"/>
+      <stop offset="100%" stop-color="#991B1B"/>
+    </linearGradient>
+  </defs>
+  <!-- Sombra -->
+  <ellipse cx="100" cy="132" rx="72" ry="9" fill="#000000" opacity="0.35"/>
+  <!-- Pan inferior -->
+  <path d="M28 85 C28 112 172 112 172 85 C172 78 160 74 150 75 C100 78 50 78 28 85 Z" fill="#B45309"/>
+  <path d="M30 84 C30 108 170 108 170 84 C170 79 155 76 100 77 C45 76 30 79 30 84 Z" fill="url(#bunTop)"/>
+  <!-- Salchicha -->
+  <rect x="24" y="66" width="152" height="26" rx="13" fill="url(#sausage)"/>
+  <path d="M26 73 Q100 68 174 73" stroke="#F87171" stroke-width="2" fill="none" opacity="0.7"/>
+  <!-- Repollo y cebolla picadita -->
+  <g fill="#ECFDF5" opacity="0.85">
+    <ellipse cx="50" cy="68" rx="8" ry="3"/>
+    <ellipse cx="75" cy="65" rx="7" ry="3"/>
+    <ellipse cx="105" cy="66" rx="9" ry="3.5"/>
+    <ellipse cx="135" cy="67" rx="8" ry="3"/>
+    <ellipse cx="155" cy="69" rx="6" ry="2.5"/>
+  </g>
+  <!-- Papitas crujientes (lluvia de papitas) -->
+  <g fill="#FDE047" stroke="#CA8A04" stroke-width="0.8">
+    <rect x="42" y="60" width="4" height="14" rx="2" transform="rotate(25 42 60)"/>
+    <rect x="58" y="58" width="3.5" height="15" rx="1.8" transform="rotate(-15 58 58)"/>
+    <rect x="74" y="57" width="4" height="13" rx="2" transform="rotate(35 74 57)"/>
+    <rect x="90" y="56" width="3.5" height="16" rx="1.8" transform="rotate(-10 90 56)"/>
+    <rect x="106" y="58" width="4" height="14" rx="2" transform="rotate(20 106 58)"/>
+    <rect x="122" y="57" width="3.5" height="15" rx="1.8" transform="rotate(-25 122 57)"/>
+    <rect x="138" y="60" width="4" height="13" rx="2" transform="rotate(15 138 60)"/>
+    <rect x="150" y="62" width="3.5" height="12" rx="1.8" transform="rotate(-30 150 62)"/>
+  </g>
+  <!-- Queso blanco rallado (nevada venezolana) -->
+  <g fill="#FFFFFF" opacity="0.95">
+    <rect x="46" y="55" width="2" height="7" rx="1"/>
+    <rect x="62" y="53" width="2.5" height="8" rx="1"/>
+    <rect x="78" y="52" width="2" height="6" rx="1"/>
+    <rect x="94" y="51" width="2.5" height="9" rx="1"/>
+    <rect x="110" y="53" width="2" height="7" rx="1"/>
+    <rect x="126" y="52" width="2.5" height="8" rx="1"/>
+    <rect x="142" y="54" width="2" height="7" rx="1"/>
+  </g>
+  <!-- Salsas en zigzag: Roja (Ketchup), Amarilla (Mostaza), Verde (Tártara/Ajo) -->
+  <!-- Ketchup -->
+  <path d="M36 68 Q52 52 68 68 T100 68 T132 68 T164 68" stroke="#EF4444" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Mostaza -->
+  <path d="M40 70 Q56 56 72 70 T104 70 T136 70 T160 70" stroke="#EAB308" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Salsa Tártara / Ajo verde -->
+  <path d="M44 65 Q60 54 76 65 T108 65 T140 65 T158 65" stroke="#10B981" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+</svg>
