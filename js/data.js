@@ -9,11 +9,17 @@
 const savedConfig = (() => {
   try {
     const raw = JSON.parse(localStorage.getItem('rey-config') || '{}');
-    if (raw && (raw.brand?.includes('Sabor') || raw.nit)) {
-      localStorage.removeItem('rey-config');
-      return {};
+    if (raw) {
+      if (raw.brand?.includes('Sabor') || raw.nit) {
+        localStorage.removeItem('rey-config');
+        return {};
+      }
+      if (raw.hours && raw.hours.includes('Martes')) {
+        delete raw.hours;
+        localStorage.setItem('rey-config', JSON.stringify(raw));
+      }
     }
-    return raw;
+    return raw || {};
   } catch (e) {
     return {};
   }
@@ -32,7 +38,7 @@ const APP = {
   /* Formato internacional WhatsApp para wa.me sin + ni espacios */
   whatsapp: savedConfig.whatsapp || '584241662498',
   phoneDisplay: savedConfig.phoneDisplay || '0424-1662498',
-  hours: savedConfig.hours || '5:00 p.m. – 2:00 a.m. (Martes a Domingo)',
+  hours: savedConfig.hours || '5:30 p.m. – 12:00 a.m. (Jueves a Sábado)',
   
   /* Tasa de cambio (USD a Bs) configurable y sincronizada con DolarApi */
   tasaBCV: Number(savedConfig.tasaBCV) || 875.65,
