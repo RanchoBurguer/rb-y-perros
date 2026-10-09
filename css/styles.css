@@ -377,27 +377,6 @@ main, .nav, .foot, .to-top { position: relative; z-index: 1; }
 }
 .nav.is-stuck .nav__inner { box-shadow: var(--shadow); background: var(--glass-2); }
 
-.store-status {
-  padding: 8px 12px;
-  background: var(--glass-2);
-  border-bottom: 1px solid var(--stroke);
-  text-align: center;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text);
-  backdrop-filter: blur(var(--blur-glass-sm));
-  transition: transform .45s var(--ease);
-}
-.store-status .status-indicator {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  box-shadow: 0 0 8px currentColor;
-}
-.store-status.is-open .status-indicator { background: var(--a4); color: var(--a4); animation: pulse 2.2s infinite; }
-.store-status.is-closed .status-indicator { background: var(--a3); color: var(--a3); }
-
 .brand { display: flex; align-items: center; gap: 11px; font-family: var(--font-display); font-weight: 700; white-space: nowrap; cursor: pointer; user-select: none; }
 .brand__logo-img {
   width: 40px; height: 40px;
