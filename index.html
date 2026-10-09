@@ -3,10 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>R.B. & Perros — «Pídelo y verás» · Perros Calientes, Hamburguesas, Pepitos y Shawarmas · El Valle, Caracas</title>
-<meta name="description" content="R.B. & Perros «Pídelo y verás». Los mejores perros calientes con todo, hamburguesas, pepitos y shawarmas en la Redoma de la Calle 5 de Julio, Los Jardines de El Valle, Caracas. WhatsApp: 0424-1662498.">
+<title>R.B. & Perros — «Pídelo y verás» · Perros Calientes y Hamburguesas · El Valle, Caracas</title>
+<meta name="description" content="R.B. & Perros «Pídelo y verás». Los mejores perros calientes y hamburguesas en la Redoma de la Calle 5 de Julio, Los Jardines de El Valle, Caracas. WhatsApp: 0424-1662498.">
 <meta name="theme-color" content="#0b0b0e">
 <meta name="color-scheme" content="dark light">
+
+<!-- Open Graph / WhatsApp / Facebook Previews -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="R.B. & Perros">
+<meta property="og:title" content="R.B. & Perros — «Pídelo y verás»">
+<meta property="og:description" content="Los mejores perros calientes y hamburguesas en la Redoma de la Calle 5 de Julio, Los Jardines de El Valle, Caracas. ¡Pide en línea y retira al momento!">
+<meta property="og:url" content="https://RanchoBurguer.github.io/rb-y-perros/">
+<meta property="og:image" content="https://RanchoBurguer.github.io/rb-y-perros/assets/og-image.jpg">
+<meta property="og:image:secure_url" content="https://RanchoBurguer.github.io/rb-y-perros/assets/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="600">
+<meta property="og:image:height" content="600">
+<meta property="og:image:alt" content="R.B. & Perros - Logo Oficial">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="R.B. & Perros — «Pídelo y verás»">
+<meta name="twitter:description" content="Comida rápida callejera caraqueña en Los Jardines de El Valle.">
+<meta name="twitter:image" content="https://RanchoBurguer.github.io/rb-y-perros/assets/og-image.jpg">
 
 <!-- Privacidad y seguridad: cero dependencias externas, cero rastreadores -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://ve.dolarapi.com; form-action 'self'; frame-src 'none'">
@@ -315,6 +334,32 @@
 <button class="to-top" id="toTop" aria-label="Volver arriba" data-magnetic>
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 6-6 6 6"/></svg>
 </button>
+
+<!-- ===================== BARRA FLOTANTE DE PEDIDO (ACCESO RÁPIDO MÓVIL) ===================== -->
+<aside class="cart-float-bar" id="cartFloatBar" aria-label="Resumen de tu pedido" hidden>
+  <div class="cart-float-bar__card" id="cartFloatBtn">
+    <div class="cart-float-bar__left">
+      <div class="cart-float-bar__icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 4h2.2l2.3 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.55L21 8H6"/>
+          <circle cx="10" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/>
+        </svg>
+        <span class="cart-float-bar__badge" id="floatCartCount">0</span>
+      </div>
+      <div class="cart-float-bar__details">
+        <span class="cart-float-bar__title">Tu Pedido</span>
+        <span class="cart-float-bar__prices">
+          <strong id="floatCartUsd">$0.00</strong>
+          <small id="floatCartBs">· Bs. 0,00</small>
+        </span>
+      </div>
+    </div>
+    <button class="cart-float-bar__cta" type="button" aria-label="Ver mi pedido y pagar">
+      <span>Ver pedido</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+</aside>
 
 <!-- ===================== CARRITO / CHECKOUT / TICKET ===================== -->
 <div class="drawer-wrap" id="drawer" aria-hidden="true">
