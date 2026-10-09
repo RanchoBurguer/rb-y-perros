@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Pepito Caraqueño Mixto">
+  <defs>
+    <linearGradient id="baguette" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <linearGradient id="steak" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#854D0E"/>
+      <stop offset="100%" stop-color="#581C87"/>
+    </linearGradient>
+  </defs>
+  <!-- Sombra -->
+  <ellipse cx="100" cy="132" rx="78" ry="9" fill="#000000" opacity="0.35"/>
+  <!-- Pan Baguette Base -->
+  <path d="M22 84 C22 118 178 118 178 84 C178 76 160 74 100 75 C40 74 22 76 22 84 Z" fill="#92400E"/>
+  <path d="M24 82 C24 114 176 114 176 82 C176 77 150 75 100 76 C50 75 24 77 24 82 Z" fill="url(#baguette)"/>
+  <!-- Trozos de carne y pollo a la plancha -->
+  <g>
+    <rect x="36" y="66" width="16" height="12" rx="3" fill="#78350F" transform="rotate(10 36 66)"/>
+    <rect x="56" y="64" width="18" height="13" rx="3" fill="#D97706" transform="rotate(-5 56 64)"/>
+    <rect x="78" y="65" width="17" height="12" rx="3" fill="#78350F" transform="rotate(12 78 65)"/>
+    <rect x="98" y="64" width="19" height="14" rx="3" fill="#D97706" transform="rotate(-8 98 64)"/>
+    <rect x="120" y="65" width="18" height="12" rx="3" fill="#78350F" transform="rotate(6 120 65)"/>
+    <rect x="142" y="64" width="16" height="13" rx="3" fill="#D97706" transform="rotate(-12 142 64)"/>
+  </g>
+  <!-- Cebolla salteada y tocineta -->
+  <path d="M30 68 Q100 62 170 68" stroke="#DC2626" stroke-width="3" fill="none" opacity="0.8"/>
+  <path d="M34 71 Q100 65 166 71" stroke="#FEF08A" stroke-width="2.5" fill="none" opacity="0.9"/>
+  <!-- Papitas rayadas por encima -->
+  <g fill="#FACC15">
+    <rect x="44" y="58" width="3" height="13" rx="1.5" transform="rotate(35 44 58)"/>
+    <rect x="66" y="56" width="3" height="14" rx="1.5" transform="rotate(-25 66 56)"/>
+    <rect x="88" y="55" width="3" height="15" rx="1.5" transform="rotate(20 88 55)"/>
+    <rect x="110" y="56" width="3" height="14" rx="1.5" transform="rotate(-15 110 56)"/>
+    <rect x="132" y="57" width="3" height="13" rx="1.5" transform="rotate(30 132 57)"/>
+    <rect x="150" y="59" width="3" height="12" rx="1.5" transform="rotate(-30 150 59)"/>
+  </g>
+  <!-- Baño de queso amarillo fundido + queso rallado blanco -->
+  <path d="M32 64 C50 58 70 66 90 60 C110 66 130 58 150 64 C162 67 170 64 172 68" stroke="#FBBF24" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <g fill="#FFFFFF" opacity="0.95">
+    <circle cx="52" cy="58" r="1.5"/><circle cx="72" cy="56" r="1.5"/><circle cx="94" cy="54" r="1.5"/>
+    <circle cx="116" cy="55" r="1.5"/><circle cx="138" cy="57" r="1.5"/><circle cx="158" cy="60" r="1.5"/>
+  </g>
+  <!-- Salsa tártara y maíz dulce en zigzag -->
+  <path d="M38 62 Q55 52 72 62 T106 62 T140 62 T164 62" stroke="#10B981" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="60" cy="62" r="3" fill="#FDE047" stroke="#CA8A04" stroke-width="0.6"/>
+  <circle cx="85" cy="60" r="3" fill="#FDE047" stroke="#CA8A04" stroke-width="0.6"/>
+  <circle cx="125" cy="61" r="3" fill="#FDE047" stroke="#CA8A04" stroke-width="0.6"/>
+</svg>
