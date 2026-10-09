@@ -1134,62 +1134,49 @@ const Drawer = (() => {
     const t = ticket.totals;
     const now = new Date();
     const pay = PAYMENTS.find((p) => p.id === data.pago) || PAYMENTS[0];
-    const ancho = 44;
-    const hueco = ancho - 14;
+    const fechaStr = `${now.toLocaleDateString('es-VE')} - ${now.toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' })}`;
 
     const items = ticket.lines.map((l, i) => {
       const valor = money(l.dish.price * l.qty);
-      const nombre = `${i + 1}. ${l.qty} x ${l.dish.name}`;
-      const anchoReal = [...nombre].reduce((n, ch) => n + (/\s/.test(ch) ? 1 : 2), 0);
-      const recortado = anchoReal > hueco ? '…' + [...nombre].slice(-8).join('') : nombre;
-      const relleno = Math.max(0, hueco - [...recortado].reduce((n, ch) => n + (/\s/.test(ch) ? 1 : 2), 0));
-      return `${recortado}${' '.repeat(relleno)}${valor}`;
-    }).join('\n');
-
-    const fila = (k, v) => {
-      const t = String(v);
-      const disponible = ancho - 11 - 1;
-      const corta = [...t].reduce((n, ch) => n + (/\s/.test(ch) ? 1 : 2), 0) > disponible
-        ? '…' + [...t].slice(-10).join('') : t;
-      const rel = Math.max(0, disponible - [...corta].reduce((n, ch) => n + (/\s/.test(ch) ? 1 : 2), 0));
-      return k.padEnd(11) + corta + ' '.repeat(rel);
-    };
+      const valorBs = moneyBs(l.dish.price * l.qty);
+      return `• ${l.qty}x ${l.dish.name}\n  Precio: ${valor} (~ ${valorBs})`;
+    }).join('\n\n');
 
     return [
-      `${APP.brand.toUpperCase()}`,
-      `PUESTO DE COMIDA RÁPIDA CALLEJERA`,
-      '─'.repeat(ancho),
-      fila('Ubicación:', 'Redoma Calle 5 de Julio, El Valle'),
-      fila('WhatsApp:', APP.phoneDisplay || '0424-1662498'),
-      '─'.repeat(ancho),
-      fila('Pedido:', ticket.id),
-      fila('Fecha:', `${now.toLocaleDateString('es-VE')} ${now.toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' })}`),
-      fila('Cliente:', data.nombre),
-      fila('Celular:', data.tel),
-      fila('Modalidad:', 'Retiro en el Puesto'),
-      fila('Delivery:', 'Próximamente'),
-      ...(data.notas ? [fila('Referencia:', data.notas)] : []),
-      '─'.repeat(ancho),
-      'CONCEPTO'.padEnd(hueco) + 'VALOR',
+      `============================================`,
+      `          ${APP.brand.toUpperCase()}`,
+      `     «Pídelo y verás» · Comida Rápida`,
+      `============================================`,
+      `Ubicación: Redoma Calle 5 de Julio, El Valle`,
+      `WhatsApp:  ${APP.phoneDisplay || '0424-1662498'}`,
+      `--------------------------------------------`,
+      `Pedido:    #${ticket.id}`,
+      `Fecha:     ${fechaStr}`,
+      `Cliente:   ${data.nombre}`,
+      `Celular:   ${data.tel}`,
+      `Modalidad: Retiro en el Puesto (Calle 5 de Julio)`,
+      ...(data.notas ? [`Notas:     ${data.notas}`] : []),
+      `--------------------------------------------`,
+      `DETALLE DE PRODUCTOS:`,
       items,
-      '─'.repeat(ancho),
-      'Subtotal ($)'.padEnd(hueco) + money(t.subtotal),
-      ...(t.discount ? ['Descuento'.padEnd(hueco) + ('−' + money(t.discount))] : []),
-      'Modalidad'.padEnd(hueco) + 'Retiro en Puesto ($0.00)',
-      '='.repeat(ancho),
-      'TOTAL ($ USD)'.padEnd(hueco) + money(t.total),
-      'TOTAL (Bs)'.padEnd(hueco) + moneyBs(t.total),
-      '='.repeat(ancho),
+      `--------------------------------------------`,
+      `Subtotal:                 ${money(t.subtotal)}`,
+      ...(t.discount ? [`Descuento:               −${money(t.discount)}`] : []),
+      `Modalidad:                Retiro en Puesto ($0.00)`,
+      `============================================`,
+      `TOTAL EN DÓLARES:         ${money(t.total)}`,
+      `TOTAL EN BS (Tasa BCV):   ${moneyBs(t.total)}`,
+      `============================================`,
       `FORMA DE PAGO: ${pay.name}`,
       ...(data.pago === 'pagomovil' ? [
-        '─'.repeat(ancho),
-        'DATOS PAGO MÓVIL:',
-        `• Bancos: 0102 (BDV) / 0134 (Banesco)`,
+        `--------------------------------------------`,
+        `DATOS PARA PAGO MÓVIL:`,
+        `• Bancos: 0102 (Banco de Venezuela) / 0134 (Banesco)`,
         `• Cédula: ${APP.pagoMovil.cedula}`,
         `• Teléfono: ${APP.pagoMovil.telefono}`,
-        `• Total a pagar: ${moneyBs(t.total)}`
+        `• Monto a transferir: ${moneyBs(t.total)}`
       ] : []),
-      '─'.repeat(ancho),
+      `--------------------------------------------`,
       `¡Gracias por preferir a R.B. & Perros! 🔥`
     ].join('\n');
   }
