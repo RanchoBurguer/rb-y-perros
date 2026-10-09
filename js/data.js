@@ -117,7 +117,7 @@ let MENU = [
   {
     id: 'perro-clasico',
     cat: 'perros',
-    name: 'Perro Caliente Normal Caraqueño',
+    name: 'Perro Caliente Normal',
     desc: 'Salchicha polaca, pan suave al vapor, cebolla, repollo, queso blanco, papitas y salsas tradicionales.',
     price: 1.14,
     prep: 8,
@@ -131,7 +131,7 @@ let MENU = [
   {
     id: 'burger-clasica',
     cat: 'hamburguesas',
-    name: 'Hamburguesa Normal de Carne',
+    name: 'Hamburguesa Normal (Carne)',
     desc: 'Carne de res, queso blanco, jamón, tomate, cebolla, papitas, huevo y salsas tradicionales.',
     price: 3.00,
     prep: 12,
