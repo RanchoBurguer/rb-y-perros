@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Hamburguesa Especial Calle 5 de Julio">
+  <defs>
+    <linearGradient id="bunH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="patty" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#78350F"/>
+      <stop offset="100%" stop-color="#451A03"/>
+    </linearGradient>
+  </defs>
+  <!-- Sombra -->
+  <ellipse cx="100" cy="136" rx="65" ry="8" fill="#000000" opacity="0.35"/>
+  <!-- Pan Superior -->
+  <path d="M42 50 C42 20 158 20 158 50 C158 55 152 58 100 58 C48 58 42 55 42 50 Z" fill="url(#bunH)"/>
+  <!-- Ajonjolí -->
+  <g fill="#FFFBEB" opacity="0.9">
+    <ellipse cx="68" cy="38" rx="2.5" ry="1.5" transform="rotate(-20 68 38)"/>
+    <ellipse cx="86" cy="32" rx="2.5" ry="1.5" transform="rotate(15 86 32)"/>
+    <ellipse cx="106" cy="30" rx="2.5" ry="1.5" transform="rotate(-10 106 30)"/>
+    <ellipse cx="126" cy="34" rx="2.5" ry="1.5" transform="rotate(25 126 34)"/>
+    <ellipse cx="140" cy="42" rx="2.5" ry="1.5" transform="rotate(-30 140 42)"/>
+    <ellipse cx="98" cy="40" rx="2.5" ry="1.5"/>
+    <ellipse cx="80" cy="44" rx="2.5" ry="1.5" transform="rotate(10 80 44)"/>
+    <ellipse cx="118" cy="44" rx="2.5" ry="1.5" transform="rotate(-15 118 44)"/>
+  </g>
+  <!-- Salsas rebosando -->
+  <path d="M44 56 C50 62 60 54 70 60 C80 54 90 62 100 56 C110 62 120 54 130 60 C140 54 150 62 156 56" fill="none" stroke="#DC2626" stroke-width="4" stroke-linecap="round"/>
+  <!-- Lechuga rizada -->
+  <path d="M38 60 C44 55 50 66 58 60 C66 66 74 56 84 62 C94 56 102 66 112 60 C122 66 130 56 140 62 C150 56 156 66 162 60 C166 68 158 72 152 70 C144 74 134 68 126 72 C116 68 106 73 96 69 C86 73 76 68 66 72 C56 68 46 74 38 68 Z" fill="#22C55E"/>
+  <!-- Tomate -->
+  <rect x="44" y="68" width="112" height="7" rx="3.5" fill="#EF4444"/>
+  <!-- Tocineta crocante -->
+  <path d="M40 76 Q70 70 100 76 T160 76" stroke="#B91C1C" stroke-width="4.5" fill="none"/>
+  <path d="M42 76 Q70 72 100 76 T158 76" stroke="#FCA5A5" stroke-width="1.8" fill="none"/>
+  <!-- Queso amarillo fundido cayendo -->
+  <path d="M40 82 L160 82 L154 92 L140 87 L125 96 L110 87 L95 98 L80 87 L65 95 L50 87 L42 92 Z" fill="#FBBF24"/>
+  <!-- Carne de hamburguesa a la plancha -->
+  <rect x="42" y="86" width="116" height="18" rx="8" fill="url(#patty)"/>
+  <!-- Papitas crujientes -->
+  <g fill="#FDE047" stroke="#B45309" stroke-width="0.5">
+    <rect x="52" y="103" width="3" height="8" rx="1.5" transform="rotate(30 52 103)"/>
+    <rect x="75" y="103" width="3" height="8" rx="1.5" transform="rotate(-20 75 103)"/>
+    <rect x="105" y="102" width="3" height="9" rx="1.5" transform="rotate(15 105 102)"/>
+    <rect x="135" y="103" width="3" height="8" rx="1.5" transform="rotate(-35 135 103)"/>
+  </g>
+  <!-- Pan Inferior -->
+  <path d="M44 105 C44 124 156 124 156 105 Z" fill="url(#bunH)"/>
+</svg>
