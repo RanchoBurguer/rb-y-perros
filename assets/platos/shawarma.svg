@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Shawarma Mixto Especial">
+  <defs>
+    <linearGradient id="pita" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="foil" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E2E8F0"/>
+      <stop offset="50%" stop-color="#94A3B8"/>
+      <stop offset="100%" stop-color="#CBD5E1"/>
+    </linearGradient>
+  </defs>
+  <!-- Sombra -->
+  <ellipse cx="100" cy="132" rx="60" ry="8" fill="#000000" opacity="0.35"/>
+  <!-- Papel de aluminio inferior -->
+  <path d="M70 75 L130 75 L122 126 C122 130 78 130 78 126 Z" fill="url(#foil)"/>
+  <path d="M70 75 Q100 84 130 75 L125 100 Q100 108 75 100 Z" fill="#64748B" opacity="0.4"/>
+  <!-- Cuerpo del Shawarma (Pan Árabe enrollado) -->
+  <path d="M62 46 C62 38 138 38 138 46 L130 82 Q100 90 70 82 Z" fill="url(#pita)"/>
+  <!-- Marcas de grill o tostado -->
+  <line x1="72" y1="52" x2="128" y2="48" stroke="#92400E" stroke-width="2.5" opacity="0.6"/>
+  <line x1="74" y1="64" x2="126" y2="60" stroke="#92400E" stroke-width="2.5" opacity="0.6"/>
+  <line x1="76" y1="76" x2="124" y2="72" stroke="#92400E" stroke-width="2.5" opacity="0.6"/>
+  <!-- Relleno asomándose por arriba -->
+  <ellipse cx="100" cy="42" rx="38" ry="14" fill="#B45309"/>
+  <!-- Carne y pollo asado -->
+  <ellipse cx="90" cy="38" rx="12" ry="7" fill="#78350F"/>
+  <ellipse cx="112" cy="37" rx="11" ry="6" fill="#D97706"/>
+  <!-- Tomate y lechuga -->
+  <circle cx="82" cy="42" r="5" fill="#EF4444"/>
+  <circle cx="120" cy="40" r="5" fill="#EF4444"/>
+  <path d="M72 40 Q85 30 100 40 Q115 30 128 40" stroke="#22C55E" stroke-width="3" fill="none"/>
+  <!-- Crema de ajo rebosando (Toum) -->
+  <path d="M84 42 C92 34 108 34 116 42 C112 50 88 50 84 42 Z" fill="#FFFFFF" opacity="0.95"/>
+  <path d="M96 46 Q100 62 97 68" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>
