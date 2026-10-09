@@ -300,8 +300,7 @@ function cargarEnFormulario(i) {
 
 function actualizarLiveBs() {
   const pr = Number($('#fPrice').value) || 0;
-  const bs = pr * getTasa();
-  $('#priceBsLive').textContent = `~ Bs. ${bs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (Tasa: ${getTasa().toFixed(2)})`;
+  $('#priceBsLive').textContent = `~ ${moneyBs(pr, getTasa())} (Tasa: ${getTasa().toFixed(2)})`;
 }
 
 function leerFormulario() {
@@ -321,7 +320,7 @@ function leerFormulario() {
 
 function actualizarPreview() {
   const p = leerFormulario();
-  const bs = (p.price * getTasa()).toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const bs = moneyBs(p.price, getTasa());
   $('#previewBox').innerHTML = `
     <article class="glass dish" style="max-width:280px; margin:0 auto;">
       ${p.badge ? `<span class="dish__badge">${esc(p.badge)}</span>` : ''}
@@ -339,7 +338,7 @@ function actualizarPreview() {
       <footer class="dish__foot">
         <div class="dish__price-box">
           <b class="dish__price">$${p.price.toFixed(2)}</b>
-          <small class="dish__price-bs">~ Bs. ${bs}</small>
+          <small class="dish__price-bs">~ ${bs}</small>
         </div>
         <button type="button" class="addbtn" aria-label="Añadir">+</button>
       </footer>
@@ -523,6 +522,35 @@ async function initPanel() {
   const cerrarAjustes = () => modalAjustes.classList.remove('is-open');
   $('#cancelAjustes').addEventListener('click', cerrarAjustes);
   $('#backAjustes').addEventListener('click', cerrarAjustes);
+
+  const btnSyncBcv = $('#btnSyncBcvLive');
+  if (btnSyncBcv) {
+    btnSyncBcv.addEventListener('click', async () => {
+      btnSyncBcv.disabled = true;
+      btnSyncBcv.textContent = 'Consultando BCV...';
+      try {
+        const res = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
+        if (res.ok) {
+          const data = await res.json();
+          const num = Number(data?.promedio);
+          if (num && num > 0) {
+            const tasaOficial = Math.round(num * 100) / 100;
+            $('#cfgTasa').value = tasaOficial;
+            Toast.show(`Tasa BCV del día obtenida: Bs. ${tasaOficial.toFixed(2)}`, 'ok');
+          } else {
+            Toast.show('No se pudo leer la tasa de la API', 'warn');
+          }
+        } else {
+          Toast.show('Error al consultar DolarApi', 'warn');
+        }
+      } catch (err) {
+        Toast.show('Error de red al consultar BCV oficial', 'warn');
+      } finally {
+        btnSyncBcv.disabled = false;
+        btnSyncBcv.textContent = '🔄 Sincronizar BCV Oficial Hoy';
+      }
+    });
+  }
 
   $('#formAjustes').addEventListener('submit', (e) => {
     e.preventDefault();
