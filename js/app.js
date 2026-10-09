@@ -829,10 +829,10 @@ const Drawer = (() => {
 
     list.innerHTML = lines.map((l) => `
       <li class="cline">
-        <img src="assets/platos/${esc(l.dish.img)}" alt="" width="56" height="42" loading="lazy">
+        <img class="cline__img" src="assets/platos/${esc(l.dish.img)}" alt="${esc(l.dish.name)}" width="68" height="52" loading="lazy">
         <div class="cline__body">
-          <strong>${esc(l.dish.name)}</strong>
-          <small>${money(l.dish.price)} c/u${l.note ? ` · ${esc(l.note)}` : ''}</small>
+          <strong class="cline__title">${esc(l.dish.name)}</strong>
+          <span class="cline__unit-price">${money(l.dish.price)} <small>· ${moneyBs(l.dish.price)} c/u</small></span>
           <div class="stepper">
             <button data-dec="${esc(l.dish.id)}" aria-label="Quitar uno de ${esc(l.dish.name)}">&minus;</button>
             <span aria-live="polite">${l.qty}</span>
@@ -840,36 +840,52 @@ const Drawer = (() => {
           </div>
         </div>
         <div class="cline__right">
-          <b>${money(l.dish.price * l.qty)}</b>
-          <button class="cline__del" data-del="${esc(l.dish.id)}" aria-label="Quitar ${esc(l.dish.name)}">&times;</button>
+          <button class="cline__del" data-del="${esc(l.dish.id)}" aria-label="Quitar ${esc(l.dish.name)}" title="Eliminar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m7 7 10 10M17 7 7 17"/></svg>
+          </button>
+          <div class="cline__subtotal">
+            <b class="cline__total-usd">${money(l.dish.price * l.qty)}</b>
+            <small class="cline__total-bs">${moneyBs(l.dish.price * l.qty)}</small>
+          </div>
         </div>
       </li>`).join('');
 
     cartEmpty.hidden = lines.length > 0;
+    const extras = $('#cartExtras');
+    if (extras) extras.hidden = lines.length === 0;
 
-    /* Totales */
+    const usdFoot = $('#cartFootTotalUsd');
+    if (usdFoot) usdFoot.textContent = money(t.total);
+    const bsFoot = $('#cartFootTotalBs');
+    if (bsFoot) bsFoot.textContent = `· ${moneyBs(t.total)}`;
+
+    /* Totales detallados (en el cuerpo con scroll) */
     const rows = [
       ['Subtotal ($)', money(t.subtotal)],
       ...(t.discount ? [[`Descuento${Cart.coupon ? ` (${Cart.coupon})` : ''}`, '−' + money(t.discount)]] : []),
       ['Modalidad', 'Retiro en el puesto ($0.00)']
     ];
-    $('#totals').innerHTML =
-      rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${v}</dd></div>`).join('') +
-      `<div class="totals__total"><dt>Total en Dólares</dt><dd>${money(t.total)}</dd></div>` +
-      `<div class="totals__total" style="color:var(--a2);"><dt>Al cambio (Tasa BCV)</dt><dd>${moneyBs(t.total)}</dd></div>`;
+    if ($('#totals')) {
+      $('#totals').innerHTML =
+        rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${v}</dd></div>`).join('') +
+        `<div class="totals__total"><dt>Total en Dólares</dt><dd>${money(t.total)}</dd></div>` +
+        `<div class="totals__total" style="color:var(--a2);"><dt>Al cambio (Tasa BCV)</dt><dd>${moneyBs(t.total)}</dd></div>`;
+    }
 
     // Mensaje de zona y ETA
-    zoneHint.innerHTML = `📍 <b>Retiro en el Puesto</b> (Redoma Calle 5 de Julio). Listo en 10–20 min.<br><span style="display:inline-block; margin-top:4px; font-size:.76rem; color:var(--a2);">🛵 Servicio de Delivery a domicilio: <b>¡Próximamente en El Valle!</b></span>`;
+    if (zoneHint) {
+      zoneHint.innerHTML = `📍 <b>Retiro en el Puesto</b> (Redoma Calle 5 de Julio). Listo en 10–20 min.<br><span style="display:inline-block; margin-top:4px; font-size:.76rem; color:var(--a2);">🛵 Servicio de Delivery a domicilio: <b>¡Próximamente en El Valle!</b></span>`;
+    }
 
     paintFreeship(t);
 
-    // Botón continuar: el motivo del bloqueo se explica, no solo se desactiva
+    // Botón continuar: compacto y horizontal
     const btn = $('#toCheckout');
     const falta = t.minOrder - t.subtotal;
     btn.disabled = lines.length === 0 || t.belowMin;
-    btn.textContent = t.belowMin && lines.length
-      ? `Te faltan ${money(falta)}`
-      : 'Continuar con el pedido';
+    btn.innerHTML = t.belowMin && lines.length
+      ? `<span>Falta ${money(falta)}</span>`
+      : `<span>Continuar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
 
     // Aviso debajo del botón para que quede claro qué hacer
     const aviso = $('#minAviso');
