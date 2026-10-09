@@ -1,37 +1,178 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Refresco o Malta Fría">
-  <defs>
-    <linearGradient id="canGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#DC2626"/>
-      <stop offset="50%" stop-color="#EF4444"/>
-      <stop offset="100%" stop-color="#991B1B"/>
-    </linearGradient>
-    <linearGradient id="canTop" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#CBD5E1"/>
-      <stop offset="100%" stop-color="#94A3B8"/>
-    </linearGradient>
-  </defs>
-  <!-- Sombra -->
-  <ellipse cx="100" cy="134" rx="44" ry="7" fill="#000000" opacity="0.35"/>
-  <!-- Lata de Refresco -->
-  <path d="M74 36 L126 36 L126 120 C126 128 74 128 74 120 Z" fill="url(#canGrad)"/>
-  <ellipse cx="100" cy="36" rx="26" ry="7" fill="url(#canTop)"/>
-  <ellipse cx="100" cy="36" rx="22" ry="5.5" fill="#64748B"/>
-  <ellipse cx="100" cy="36" rx="14" ry="3.5" fill="#CBD5E1"/>
-  <!-- Anilla de la lata -->
-  <ellipse cx="96" cy="35" rx="5" ry="2.5" fill="#475569"/>
-  <!-- Brillo metálico -->
-  <path d="M84 42 L88 42 L88 122 L84 120 Z" fill="#FFFFFF" opacity="0.35"/>
-  <path d="M92 42 L94 42 L94 122 L92 121 Z" fill="#FFFFFF" opacity="0.2"/>
-  <!-- Franja decorativa estilo refresco -->
-  <path d="M74 65 Q100 85 126 65 L126 80 Q100 100 74 80 Z" fill="#FFFFFF" opacity="0.9"/>
-  <path d="M74 72 Q100 92 126 72 L126 78 Q100 98 74 78 Z" fill="#FBBF24"/>
-  <!-- Gotas de frío / condensación -->
-  <circle cx="82" cy="52" r="1.5" fill="#FFFFFF" opacity="0.8"/>
-  <circle cx="80" cy="95" r="1.5" fill="#FFFFFF" opacity="0.8"/>
-  <circle cx="116" cy="60" r="1.8" fill="#FFFFFF" opacity="0.8"/>
-  <circle cx="118" cy="102" r="1.5" fill="#FFFFFF" opacity="0.8"/>
-  <circle cx="112" cy="85" r="1.2" fill="#FFFFFF" opacity="0.8"/>
-  <!-- Cubos de hielo al lado -->
-  <rect x="134" y="104" width="20" height="20" rx="4" fill="#93C5FD" opacity="0.75" stroke="#BFDBFE" stroke-width="1.5" transform="rotate(15 134 104)"/>
-  <rect x="48" y="108" width="18" height="18" rx="4" fill="#93C5FD" opacity="0.7" stroke="#BFDBFE" stroke-width="1.5" transform="rotate(-20 48 108)"/>
-</svg>
+/* =========================================================
+   R.B. & PERROS — Capa de Datos (Caracas, Venezuela)
+   «Pídelo y verás»
+   Puesto de Perros Calientes, Hamburguesas, Pepitos y Shawarmas
+   Redoma de la Calle 5 de Julio, Los Jardines de El Valle
+   ========================================================= */
+
+/* Cargar configuración personalizada guardada por el Admin desde localStorage */
+const savedConfig = (() => {
+  try {
+    const raw = JSON.parse(localStorage.getItem('rey-config') || '{}');
+    if (raw && (raw.brand?.includes('Sabor') || raw.nit)) {
+      localStorage.removeItem('rey-config');
+      return {};
+    }
+    return raw;
+  } catch (e) {
+    return {};
+  }
+})();
+
+const APP = {
+  brand: savedConfig.brand || 'R.B. & Perros',
+  slogan: '«Pídelo y verás»',
+  legalName: 'R.B. & Perros',
+  nit: '',
+  rif: 'V-24.166.249-8',
+  tagline: savedConfig.tagline || '«Pídelo y verás» · Perros Calientes, Hamburguesas, Pepitos y Shawarmas',
+  city: 'Caracas, Venezuela',
+  address: savedConfig.address || 'Redoma de la Calle 5 de Julio, Los Jardines de El Valle',
+  puestoRef: 'Puesto callejero en la redoma de la Calle 5 de Julio',
+  /* Formato internacional WhatsApp para wa.me sin + ni espacios */
+  whatsapp: savedConfig.whatsapp || '584241662498',
+  phoneDisplay: savedConfig.phoneDisplay || '0424-1662498',
+  hours: savedConfig.hours || '5:00 p.m. – 2:00 a.m. (Martes a Domingo)',
+  
+  /* Tasa de cambio (USD a Bs) configurable y sincronizada con DolarApi */
+  tasaBCV: Number(savedConfig.tasaBCV) || 875.65,
+
+  /* Datos para Pago Móvil en Venezuela */
+  pagoMovil: {
+    banco: savedConfig.pmBanco || 'Banesco (0134) o Banco de Venezuela (0102)',
+    telefono: savedConfig.pmTelefono || '0424-1662498',
+    cedula: savedConfig.pmCedula || 'V-24.166.249',
+    titular: savedConfig.pmTitular || 'R.B. & Perros'
+  }
+};
+
+/* ---------- Modalidad / Retiro en el Puesto (Delivery Próximamente) ---------- */
+const DELIVERY = {
+  fee: 0,            // Sin recargo de retiro
+  freeFrom: 999999,  // Delivery en pausa
+  minOrder: 1.14,    // pedido mínimo: al menos un perro caliente ($1.14 ~ 1000 Bs)
+  eta: '10 – 20 min',
+  deliveryStatus: 'Próximamente',
+  pickupOnly: true,
+  coverage: [
+    'Retiro en el Puesto (Redoma Calle 5 de Julio)'
+  ],
+  zones: {
+    'Retiro en el Puesto (Redoma Calle 5 de Julio)': 0.00
+  }
+};
+
+/* ---------- Métodos de pago en Venezuela ---------- */
+const PAYMENTS = [
+  {
+    id: 'pagomovil',
+    name: 'Pago Móvil (Bs.)',
+    desc: 'Banesco / BDV / Mercantil a la tasa oficial del día',
+    icon: 'phone',
+    note: 'Recomendado'
+  },
+  {
+    id: 'efectivo_usd',
+    name: 'Efectivo Divisas ($ USD)',
+    desc: 'Pagas con billetes en $ al retirar',
+    icon: 'cash',
+    note: 'Indicar en notas si necesitas vuelto'
+  },
+  {
+    id: 'efectivo_bs',
+    name: 'Efectivo Bolívares (Bs.)',
+    desc: 'Billetes en efectivo en Bs al retirar en el puesto',
+    icon: 'cash',
+    note: 'Al cambio de la tasa oficial'
+  },
+  {
+    id: 'punto',
+    name: 'Punto de Venta / Biopago',
+    desc: 'Tarjeta de débito en el puesto',
+    icon: 'card',
+    note: 'Válido para Retiro en el Puesto'
+  }
+];
+
+/* ---------- Cupones / Promociones ---------- */
+const COUPONS = {
+  VALLE10:        { type: 'percent',  value: 10,   label: '10% de descuento en tu orden' },
+  COMBORB:        { type: 'fixed',    value: 0.50, label: '$0.50 de descuento especial R.B. & Perros' }
+};
+
+/* ---------- Categorías del Puesto ---------- */
+const CATEGORIES = [
+  { id: 'todos',        name: 'Todo el menú' },
+  { id: 'perros',       name: '🌭 Perros' },
+  { id: 'hamburguesas', name: '🍔 Hamburguesas' }
+];
+
+/* ---------- Menú por defecto (Plan B si no hay menu.json) ---------- */
+let MENU = [
+  /* --- 1. Perros Calientes (Disponibles) --- */
+  {
+    id: 'perro-clasico',
+    cat: 'perros',
+    name: 'Perro Caliente Normal Caraqueño',
+    desc: 'Salchicha vienesa en pan suave al vapor, cebollita picada, repollo fresco, lluvia de papitas crujientes, queso blanco llanero rallado y salsas tradicionales.',
+    price: 1.14,
+    prep: 8,
+    img: 'perro_real.jpg',
+    tags: ['popular'],
+    badge: 'Disponible · 1.000 Bs.',
+    disponible: true
+  },
+
+  /* --- 2. Hamburguesas (Disponibles) --- */
+  {
+    id: 'burger-clasica',
+    cat: 'hamburguesas',
+    name: 'Hamburguesa Normal de Carne',
+    desc: 'Carne de res sazonada a la plancha, queso amarillo cheddar, jamón, lechuga fresca, tomate, cebolla, papitas crujientes y salsas de la casa.',
+    price: 3.00,
+    prep: 12,
+    img: 'hamburguesa_real.jpg',
+    tags: ['popular'],
+    badge: 'Disponible · $3.00',
+    disponible: true
+  }
+];
+
+/* ---------- Utilidades de Formato Monetario ($ USD y Bs.) ---------- */
+const moneyUSD = (n) => `$${Number(n || 0).toFixed(2)}`;
+
+const moneyBs = (n, tasa = null) => {
+  const currentTasa = tasa !== null ? Number(tasa) : (Number(APP.tasaBCV) || 875.65);
+  const bs = Number(n || 0) * currentTasa;
+  return `Bs. ${bs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+};
+
+const money = (n) => moneyUSD(n);
+const moneyDual = (n) => `${moneyUSD(n)} · ${moneyBs(n)}`;
+
+/* Etiquetas legibles */
+const TAG_LABELS = {
+  'popular': 'Favorito',
+  'pico': 'Con Todo',
+  'familiar': 'Para Compartir',
+  'natural': '100% Natural'
+};
+
+/* ---------- Seguridad Criptográfica del Admin (PBKDF2 + SHA-256) ---------- */
+const DEFAULT_SECURITY = {
+  salt: 'c1a5e78b94df45e0',
+  hash: '22c3d730fa26c18b855af569067696bd64c958a8990760444e08a5903b1109ed', // ñadminkirito2026.
+  username: 'kiritoapt2',
+  iterations: 100000,
+  maxAttempts: 5,
+  lockoutMinutes: 15
+};
+
+const SECURITY = (() => {
+  try {
+    const custom = JSON.parse(localStorage.getItem('rey-security') || '{}');
+    return { ...DEFAULT_SECURITY, ...custom };
+  } catch (e) {
+    return DEFAULT_SECURITY;
+  }
+})();
