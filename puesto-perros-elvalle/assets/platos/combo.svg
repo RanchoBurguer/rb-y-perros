@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Combo de comida completa">
+  <defs>
+    <linearGradient id="cajaC" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dde3ee"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="100" cy="134" rx="76" ry="8" fill="#0f172a" opacity=".12"/>
+  <rect x="30" y="92" width="140" height="28" rx="10" fill="#cbd5e1"/>
+  <rect x="30" y="86" width="140" height="26" rx="10" fill="#e8edf5" stroke="#cbd5e1" stroke-width="2"/>
+  <g transform="translate(42,-16)">
+    <path d="M4 52a26 18 0 0 1 52 0Z" fill="#e0a53a"/>
+    <rect x="0" y="52" width="60" height="6" rx="3" fill="#f2c94c"/>
+    <rect x="2" y="56" width="56" height="26" rx="5" fill="url(#cajaC)" stroke="#cbd5e1" stroke-width="2"/>
+    <path d="M30 56v26" stroke="#cbd5e1" stroke-width="2"/>
+  </g>
+  <g transform="translate(108,4)">
+    <path d="M10 44h24l-4 44a6 6 0 0 1-6 5h-4a6 6 0 0 1-6-5Z" fill="#f2836b" opacity=".9"/>
+    <path d="M10 44h24l-1 8H11Z" fill="#fff3d0" opacity=".5"/>
+    <path d="M30 30l10 6" stroke="#5aa845" stroke-width="4" stroke-linecap="round"/>
+    <rect x="8" y="62" width="28" height="16" rx="4" fill="#fff" opacity=".9"/>
+  </g>
+  <g fill="#f6d08a">
+    <rect x="106" y="70" width="8" height="18" rx="3" transform="rotate(12 110 79)"/>
+    <rect x="120" y="72" width="8" height="18" rx="3" transform="rotate(-8 124 81)"/>
+  </g>
+</svg>
