@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Arepa de choclo con relleno">
+  <defs>
+    <radialGradient id="arepA" cx="42%" cy="34%">
+      <stop offset="0" stop-color="#fdf1cf"/><stop offset="1" stop-color="#e0c07a"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="100" cy="132" rx="60" ry="7" fill="#0f172a" opacity=".12"/>
+  <ellipse cx="100" cy="104" rx="54" ry="16" fill="#d8b56e"/>
+  <ellipse cx="100" cy="96" rx="54" ry="16" fill="url(#arepA)"/>
+  <g fill="#fff6e0" opacity=".55">
+    <circle cx="76" cy="92" r="2.4"/><circle cx="92" cy="86" r="2.4"/><circle cx="110" cy="90" r="2.4"/>
+    <circle cx="126" cy="95" r="2.4"/><circle cx="84" cy="99" r="2.4"/><circle cx="116" cy="80" r="2.4"/>
+  </g>
+  <ellipse cx="100" cy="66" rx="46" ry="15" fill="#c9a45e" opacity=".5"/>
+  <path d="M60 64q40-22 80 0-40 8-80 0Z" fill="#7a3f2a"/>
+  <path d="M66 60q34-14 68 0-34 6-68 0Z" fill="#e0b47c" opacity=".55"/>
+  <ellipse cx="100" cy="58" rx="46" ry="15" fill="url(#arepA)"/>
+  <g fill="#fff6e0" opacity=".5">
+    <circle cx="80" cy="54" r="2.2"/><circle cx="98" cy="50" r="2.2"/><circle cx="116" cy="55" r="2.2"/>
+    <circle cx="88" cy="62" r="2.2"/><circle cx="108" cy="63" r="2.2"/>
+  </g>
+</svg>
