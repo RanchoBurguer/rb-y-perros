@@ -1033,15 +1033,75 @@ mark {
 @keyframes ctaGlow { 50% { opacity: .32; transform: translateX(-50%) scale(1.14); } }
 .cta > *:not(.cta__glow) { position: relative; z-index: 1; }
 .cta__grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
-  margin: 30px 0 30px; text-align: left;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  margin: 34px 0 32px; text-align: left;
 }
-.cta__item {
-  padding: 14px; border-radius: var(--r-sm);
+.cta__card {
+  position: relative; display: flex; flex-direction: column; justify-content: space-between;
+  padding: 20px 18px 18px; border-radius: var(--r-md);
   background: var(--glass-2); border: 1px solid var(--stroke);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  transition: transform .28s var(--ease), border-color .28s, box-shadow .28s, background .28s;
+  text-decoration: none; color: inherit;
+  box-shadow: 0 4px 16px rgba(0,0,0,.04);
 }
-.cta__item small { display: block; font-size: .72rem; color: var(--muted); margin-bottom: 4px; }
-.cta__item b { font-size: .88rem; font-weight: 600; }
+[data-theme="dark"] .cta__card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+.cta__card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(229, 9, 20, 0.45);
+  box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.35);
+  background: var(--surface-hover);
+}
+[data-theme="dark"] .cta__card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(229, 9, 20, 0.65);
+}
+.cta__card--link { cursor: pointer; }
+.cta__card-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px;
+}
+.cta__card-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(229, 9, 20, 0.12); color: var(--a2);
+}
+.cta__card-icon svg { width: 18px; height: 18px; }
+.cta__card-icon--wa { background: rgba(34, 197, 94, 0.14); color: #22c55e; }
+.cta__card-icon--clock { background: rgba(234, 179, 8, 0.14); color: #eab308; }
+.cta__card-icon--rate { background: rgba(59, 130, 246, 0.14); color: #3b82f6; }
+.cta__card-label {
+  font-size: .72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--muted);
+}
+.cta__card-val {
+  font-family: var(--font-display); font-size: 1.05rem; font-weight: 700;
+  color: var(--text); line-height: 1.3; margin-bottom: 6px;
+}
+.cta__card-sub {
+  font-size: .78rem; color: var(--muted); line-height: 1.35;
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: auto;
+}
+.badge-mini {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
+  font-size: .68rem; font-weight: 700; border-radius: 99px;
+  letter-spacing: .02em; background: var(--glass-2); border: 1px solid var(--stroke); color: var(--muted);
+}
+.badge-mini--green {
+  background: rgba(34, 197, 94, 0.16); color: #22c55e; border-color: rgba(34, 197, 94, 0.32);
+}
+.badge-mini--red {
+  background: rgba(239, 68, 68, 0.16); color: #ef4444; border-color: rgba(239, 68, 68, 0.32);
+}
+.badge-mini--wa {
+  background: rgba(34, 197, 94, 0.16); color: #22c55e; border-color: rgba(34, 197, 94, 0.32);
+}
+.badge-mini--bcv {
+  background: rgba(59, 130, 246, 0.16); color: #3b82f6; border-color: rgba(59, 130, 246, 0.32);
+}
 
 .foot { position: relative; border-top: 1px solid var(--stroke); padding: 46px 0 22px; }
 .foot__inner { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: flex-start; }
@@ -1441,9 +1501,12 @@ mark {
   .drawer { width: 100%; }
 }
 
+@media (max-width: 640px) {
+  .cta__grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 420px) {
   .hero__cta .btn { width: 100%; }
-  .cta__grid { grid-template-columns: 1fr; }
 }
 
 /* ---------- 21. COMPATIBILIDAD Y RENDIMIENTO ----------
