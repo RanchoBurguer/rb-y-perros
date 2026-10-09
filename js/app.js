@@ -131,25 +131,41 @@ syncDolarApi();
 /* ============ 2.c Estado del Puesto (Horario) ============ */
 function checkStoreStatus() {
   const now = new Date();
-  const day = now.getDay();
+  const day = now.getDay(); // 0: Dom, 1: Lun, 2: Mar, 3: Mié, 4: Jue, 5: Vie, 6: Sáb
   const hour = now.getHours();
   const min = now.getMinutes();
 
   let isOpen = false;
-  // Abierto Jueves (4), Viernes (5), Sábado (6)
+  // Abierto Jueves (4), Viernes (5), Sábado (6) de 5:30 p.m. a 12:00 a.m.
   if (day >= 4 && day <= 6) {
     const totalMins = hour * 60 + min;
     const startMins = 17 * 60 + 30; // 5:30 PM
-    const endMins = 23 * 60 + 59; // 12:00 AM (midnight)
+    const endMins = 23 * 60 + 59; // 11:59 PM (medianoche)
     if (totalMins >= startMins && totalMins <= endMins) {
       isOpen = true;
     }
   }
-  
+
+  const dotEl = $('#heroStoreDot');
+  const textEl = $('#heroStoreText');
+  const statusEl = $('#heroStoreStatus');
+
+  if (dotEl && textEl) {
+    if (isOpen) {
+      dotEl.className = 'dot dot--green';
+      textEl.textContent = 'Puesto abierto';
+      if (statusEl) statusEl.title = 'Abierto de 5:30 pm a 12:00 am (Jue-Sáb)';
+    } else {
+      dotEl.className = 'dot dot--red';
+      textEl.textContent = 'Puesto cerrado';
+      if (statusEl) statusEl.title = 'Abrimos de Jueves a Sábado (5:30 pm - 12:00 am)';
+    }
+  }
+
   if (!isOpen && !sessionStorage.getItem('rey-closed-warn')) {
     setTimeout(() => {
       if (typeof Toast !== 'undefined' && Toast.show) {
-        Toast.show('Cerrado por ahora. Abrimos de Jueves a Sábado (5:30 pm - 12:00 am).', 'error');
+        Toast.show('Cerrado por ahora. Abrimos de Jueves a Sábado (5:30 pm - 12:00 am).', 'warn');
         sessionStorage.setItem('rey-closed-warn', '1');
       }
     }, 1500);
