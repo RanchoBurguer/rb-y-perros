@@ -16,8 +16,13 @@ const savedConfig = (() => {
       }
       if (raw.hours && raw.hours.includes('Martes')) {
         delete raw.hours;
-        localStorage.setItem('rey-config', JSON.stringify(raw));
       }
+      if (raw.pmCedula && (raw.pmCedula.includes('24.166') || raw.pmCedula.includes('24166'))) {
+        delete raw.pmCedula;
+        delete raw.pmBanco;
+        delete raw.pmTelefono;
+      }
+      localStorage.setItem('rey-config', JSON.stringify(raw));
     }
     return raw || {};
   } catch (e) {
@@ -30,7 +35,7 @@ const APP = {
   slogan: '«Pídelo y verás»',
   legalName: 'R.B. & Perros',
   nit: '',
-  rif: 'V-24.166.249-8',
+  rif: 'V-27.879.488',
   tagline: savedConfig.tagline || '«Pídelo y verás» · Perros Calientes, Hamburguesas, Pepitos y Shawarmas',
   city: 'Caracas, Venezuela',
   address: savedConfig.address || 'Redoma de la Calle 5 de Julio, Los Jardines de El Valle',
@@ -43,11 +48,11 @@ const APP = {
   /* Tasa de cambio (USD a Bs) configurable y sincronizada con DolarApi */
   tasaBCV: Number(savedConfig.tasaBCV) || 875.65,
 
-  /* Datos para Pago Móvil en Venezuela */
+  /* Datos para Pago Móvil en Venezuela (0102 - 0134 - 27879488 - 04241662498) */
   pagoMovil: {
-    banco: savedConfig.pmBanco || 'Banesco (0134) o Banco de Venezuela (0102)',
-    telefono: savedConfig.pmTelefono || '0424-1662498',
-    cedula: savedConfig.pmCedula || 'V-24.166.249',
+    banco: savedConfig.pmBanco || '0102 (Banco de Venezuela) / 0134 (Banesco)',
+    telefono: savedConfig.pmTelefono || '04241662498',
+    cedula: savedConfig.pmCedula || 'V-27879488',
     titular: savedConfig.pmTitular || 'R.B. & Perros'
   }
 };
