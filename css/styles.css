@@ -1281,6 +1281,15 @@ mark {
 }
 [data-theme="dark"] .pay__note { color: #9CC49B; }
 .pay-note { margin-top: 12px; font-size: .82rem; color: var(--muted); padding: 12px 14px; border-radius: var(--r-sm); background: var(--glass); border: 1px solid var(--stroke); }
+.btn-copy-chip {
+  padding: 2px 9px; font-size: .72rem; font-weight: 700; border-radius: 99px;
+  background: var(--glass-2); border: 1px solid var(--stroke); color: var(--a2);
+  cursor: pointer; transition: all .2s;
+}
+.btn-copy-chip:hover {
+  background: var(--surface-hover); border-color: var(--a2); transform: scale(1.04);
+}
+.btn--xs { padding: 4px 10px; font-size: .74rem; font-weight: 700; border-radius: 99px; }
 
 .checkout__submit {
   margin-top: 24px; padding-top: 18px;
