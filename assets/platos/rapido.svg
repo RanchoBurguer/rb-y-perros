@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Hamburguesa con papas">
+  <defs>
+    <linearGradient id="bunH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5cf8e"/><stop offset="1" stop-color="#d99f4d"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="100" cy="136" rx="60" ry="7" fill="#0f172a" opacity=".12"/>
+  <path d="M46 44a34 22 0 0 1 68 0Z" fill="url(#bunH)"/>
+  <g fill="#fff3d6" opacity=".7">
+    <circle cx="72" cy="36" r="2"/><circle cx="88" cy="30" r="2"/><circle cx="104" cy="32" r="2"/>
+    <circle cx="116" cy="39" r="2"/><circle cx="62" cy="42" r="2"/>
+  </g>
+  <rect x="44" y="48" width="72" height="8" rx="4" fill="#f2c94c"/>
+  <path d="M46 54h68v6H46Z" fill="#e0a53a"/>
+  <path d="M44 58c-6 2-6 8 0 9h72c6-1 6-7 0-9Z" fill="#6fbf3f"/>
+  <rect x="46" y="65" width="68" height="16" rx="8" fill="#6b3b23"/>
+  <rect x="44" y="72" width="72" height="10" rx="5" fill="#e0544a"/>
+  <path d="M46 84c0 6 6 10 14 10h60c8 0 14-4 14-10Z" fill="#d99f4d"/>
+  <g fill="#f6d08a">
+    <rect x="140" y="98" width="9" height="26" rx="3" transform="rotate(14 144 111)"/>
+    <rect x="156" y="98" width="9" height="26" rx="3" transform="rotate(-6 160 111)"/>
+    <rect x="130" y="102" width="9" height="24" rx="3" transform="rotate(24 134 114)"/>
+  </g>
+</svg>
