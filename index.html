@@ -378,12 +378,18 @@
     <div class="drawer__body">
       <!-- Vista 1: carrito -->
       <section class="view is-active" id="viewCart">
-        <div class="zone-row">
-          <label class="select select--full">
-            <span>Zona de entrega / Modalidad</span>
-            <select id="zone"></select>
-          </label>
-          <p class="zone-hint" id="zoneHint"></p>
+        <div class="cart-pickup-banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div>
+            <strong>Retiro en el Puesto</strong> · Redoma Calle 5 de Julio
+            <small>Listo en 10–20 min · Delivery próximamente</small>
+          </div>
+        </div>
+
+        <!-- Mantenemos elementos ocultos para compatibilidad con JS -->
+        <div class="zone-row sr" aria-hidden="true">
+          <select id="zone"></select>
+          <p id="zoneHint"></p>
         </div>
 
         <div class="freeship" id="freeship" hidden>
@@ -402,6 +408,17 @@
           </div>
           <p>Tu orden está vacía.</p>
           <button class="btn btn--sm btn--primary" data-close>Ver el menú</button>
+        </div>
+
+        <!-- Desglose y Cupón scrolleables para no asfixiar el espacio de los productos -->
+        <div class="cart-extras" id="cartExtras">
+          <div class="coupon">
+            <input type="text" id="couponInput" placeholder="Código de promo (ej: VALLE10)" aria-label="Código de descuento" autocomplete="off" spellcheck="false" maxlength="20">
+            <button class="btn btn--sm btn--ghost" id="couponApply">Aplicar</button>
+          </div>
+          <p class="coupon-ok" id="couponMsg" hidden></p>
+          <dl class="totals" id="totals"></dl>
+          <p class="fineprint">Tu pedido va directo a nuestro WhatsApp sin intermediarios.</p>
         </div>
       </section>
 
@@ -496,18 +513,22 @@
     </div>
 
     <!-- Pie del carrito -->
+    <!-- Pie del carrito (Barra horizontal compacta de acción) -->
     <footer class="drawer__foot" id="cartFoot">
-      <div class="coupon">
-        <input type="text" id="couponInput" placeholder="Código de promo (ej: VALLE10)" aria-label="Código de descuento" autocomplete="off" spellcheck="false" maxlength="20">
-        <button class="btn btn--sm btn--ghost" id="couponApply">Aplicar</button>
+      <div class="cart-foot__summary">
+        <div class="cart-foot__total-box">
+          <span class="cart-foot__total-label">Total a pagar:</span>
+          <div class="cart-foot__prices">
+            <strong id="cartFootTotalUsd">$0.00</strong>
+            <small id="cartFootTotalBs">· Bs. 0,00</small>
+          </div>
+        </div>
+        <button class="btn btn--primary" id="toCheckout" data-magnetic>
+          <span>Continuar</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
       </div>
-      <p class="coupon-ok" id="couponMsg" hidden></p>
-
-      <dl class="totals" id="totals"></dl>
-
-      <button class="btn btn--primary btn--full" id="toCheckout" data-magnetic>Continuar con el pedido</button>
       <p class="min-aviso" id="minAviso" hidden></p>
-      <p class="fineprint">Tu pedido va directo a nuestro WhatsApp sin intermediarios.</p>
     </footer>
   </aside>
 </div>
