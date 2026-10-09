@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Bandeja paisa servida en plato">
+  <defs>
+    <linearGradient id="platoB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e4e8f2"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="100" cy="137" rx="66" ry="7" fill="#0f172a" opacity=".12"/>
+  <ellipse cx="100" cy="74" rx="84" ry="60" fill="url(#platoB)"/>
+  <ellipse cx="100" cy="74" rx="70" ry="48" fill="#fbfcfe" stroke="#dde2ee" stroke-width="2"/>
+  <ellipse cx="64" cy="58" rx="20" ry="15" fill="#5b3a29"/>
+  <circle cx="58" cy="54" r="3" fill="#7b4c34"/><circle cx="70" cy="60" r="3" fill="#7b4c34"/><circle cx="66" cy="50" r="2.4" fill="#7b4c34"/>
+  <ellipse cx="112" cy="50" rx="18" ry="12" fill="#8a4b2a"/>
+  <circle cx="106" cy="47" r="2.4" fill="#a9603a"/><circle cx="117" cy="53" r="2.4" fill="#a9603a"/>
+  <rect x="124" y="74" width="16" height="12" rx="3" fill="#e7a99a" transform="rotate(-12 132 80)"/>
+  <rect x="142" y="82" width="14" height="11" rx="3" fill="#d89486" transform="rotate(8 149 87)"/>
+  <circle cx="68" cy="94" r="13" fill="#fffdf7"/><circle cx="68" cy="94" r="5.5" fill="#f6b93b"/>
+  <path d="M102 84q10-6 20 0" stroke="#f4c542" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M98 97q10-6 20 0" stroke="#efb93a" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M140 58q10-9 18 0-8 13-18 0Z" fill="#5aa845"/>
+  <ellipse cx="94" cy="108" rx="16" ry="9" fill="#ffffff"/>
+  <circle cx="90" cy="106" r="1.6" fill="#dde3ee"/><circle cx="98" cy="108" r="1.6" fill="#dde3ee"/>
+</svg>
