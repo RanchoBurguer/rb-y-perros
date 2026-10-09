@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Jugo de mango natural">
+  <defs>
+    <linearGradient id="jugoJ" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd05c"/><stop offset="1" stop-color="#f0a021"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="100" cy="136" rx="42" ry="6" fill="#0f172a" opacity=".12"/>
+  <path d="M112 30l22 8" stroke="#e0574f" stroke-width="6" stroke-linecap="round"/>
+  <path d="M66 44h68l-9 82a10 10 0 0 1-10 9H85a10 10 0 0 1-10-9Z" fill="url(#jugoJ)" opacity=".92"/>
+  <path d="M66 44h68l-2 18H68Z" fill="#fff3d0" opacity=".45"/>
+  <g fill="#fff3d0" opacity=".5">
+    <circle cx="86" cy="82" r="3"/><circle cx="104" cy="72" r="2.4"/><circle cx="116" cy="96" r="3"/>
+    <circle cx="94" cy="108" r="2.4"/><circle cx="78" cy="70" r="2.2"/>
+  </g>
+  <path d="M74 48l6 78" stroke="#fff" stroke-width="4" opacity=".28" stroke-linecap="round"/>
+  <circle cx="142" cy="112" r="14" fill="#f5a623"/>
+  <circle cx="142" cy="112" r="10" fill="#ffd05c"/>
+  <g stroke="#f5a623" stroke-width="2">
+    <path d="M142 102v20M132 112h20"/>
+  </g>
+</svg>
