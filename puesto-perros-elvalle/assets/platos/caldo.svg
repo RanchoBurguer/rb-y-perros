@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Caldo colombiano con pope y aguacate">
+  <defs>
+    <linearGradient id="bowlC" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dde3ee"/>
+    </linearGradient>
+    <radialGradient id="broth" cx="50%" cy="40%">
+      <stop offset="0" stop-color="#f0c07a"/><stop offset="1" stop-color="#d9a055"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="100" cy="138" rx="58" ry="6" fill="#0f172a" opacity=".12"/>
+  <path d="M38 74h124a62 62 0 0 1-124 0Z" fill="url(#bowlC)"/>
+  <ellipse cx="100" cy="74" rx="62" ry="14" fill="#fbfcfe" stroke="#dbe1ec" stroke-width="2"/>
+  <ellipse cx="100" cy="74" rx="50" ry="11" fill="url(#broth)"/>
+  <path d="M74 74q0-9 9-9t9 9Z" fill="#f6e0b0"/>
+  <path d="M100 74q0-8 8-8t8 8Z" fill="#f6e0b0"/>
+  <circle cx="68" cy="74" r="4" fill="#f2c94c"/>
+  <circle cx="130" cy="74" r="4" fill="#f2c94c"/>
+  <ellipse cx="110" cy="72" rx="10" ry="4" fill="#5aa845"/>
+  <circle cx="86" cy="70" r="3" fill="#7ab648"/>
+  <path d="M88 32q6-8 0-16" stroke="#cbd5e1" stroke-width="3" fill="none" stroke-linecap="round" opacity=".65"/>
+  <path d="M108 32q6-8 0-16" stroke="#cbd5e1" stroke-width="3" fill="none" stroke-linecap="round" opacity=".4"/>
+</svg>
