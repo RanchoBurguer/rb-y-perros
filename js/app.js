@@ -1003,7 +1003,10 @@ const Drawer = (() => {
       if (i.closest('.field').classList.contains('invalid')) validate(i);
     });
   });
-  $('#cPhone').addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10); });
+  $('#cPhone').addEventListener('input', (e) => {
+    // Permite los 11 dígitos completos de números venezolanos (ej: 04241662498, 0412..., etc.)
+    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 11);
+  });
 
   function orderId() {
     const d = new Date();
@@ -1096,7 +1099,7 @@ const Drawer = (() => {
       `PUESTO DE COMIDA RÁPIDA CALLEJERA`,
       '─'.repeat(ancho),
       fila('Ubicación:', 'Redoma Calle 5 de Julio, El Valle'),
-      fila('WhatsApp:', `+58 ${APP.whatsapp}`),
+      fila('WhatsApp:', APP.phoneDisplay || '0424-1662498'),
       '─'.repeat(ancho),
       fila('Pedido:', ticket.id),
       fila('Fecha:', `${now.toLocaleDateString('es-VE')} ${now.toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' })}`),
@@ -1117,9 +1120,16 @@ const Drawer = (() => {
       'TOTAL (Bs)'.padEnd(hueco) + moneyBs(t.total),
       '='.repeat(ancho),
       `FORMA DE PAGO: ${pay.name}`,
-      ...(data.pago === 'pagomovil' ? [`PAGO MÓVIL: ${APP.pagoMovil.telefono} (V)`] : []),
+      ...(data.pago === 'pagomovil' ? [
+        '─'.repeat(ancho),
+        'DATOS PAGO MÓVIL:',
+        `• Bancos: 0102 (BDV) / 0134 (Banesco)`,
+        `• Cédula: ${APP.pagoMovil.cedula}`,
+        `• Teléfono: ${APP.pagoMovil.telefono}`,
+        `• Total a pagar: ${moneyBs(t.total)}`
+      ] : []),
       '─'.repeat(ancho),
-      `¡Gracias por preferir el sabor del Valle! 🔥`
+      `¡Gracias por preferir a R.B. & Perros! 🔥`
     ].join('\n');
   }
 
