@@ -1,0 +1,207 @@
+{
+  "version": 1,
+  "generado": "2026-10-09",
+  "negocio": {
+    "nombre": "R.B. & Perros",
+    "eslogan": "«Pídelo y verás»",
+    "subtitulo": "«Pídelo y verás» · Perros Calientes, Hamburguesas, Pepitos y Shawarmas",
+    "ubicacion": "Redoma de la Calle 5 de Julio, Los Jardines de El Valle, Caracas",
+    "whatsapp": "584241662498",
+    "tasaBCV": 875.65
+  },
+  "total": 18,
+  "dishes": [
+    {
+      "id": "perro-clasico",
+      "cat": "perros",
+      "name": "Perro Caliente Clásico Caraqueño",
+      "desc": "Salchicha vienesa en pan suave al vapor, cebollita picada, repollo fresco, lluvia de papitas crujientes, queso blanco rallado y salsas tradicionales (ketchup, mostaza, mayonesa).",
+      "price": 1.14,
+      "prep": 8,
+      "img": "perro_real.jpg",
+      "tags": ["popular"],
+      "badge": "1.000 Bs."
+    },
+    {
+      "id": "perro-especial",
+      "cat": "perros",
+      "name": "Perro Especial La Redoma",
+      "desc": "Salchicha especial, tocineta crujiente, maíz tierno dulce, queso amarillo fundido, lluvia de papitas crocantes, queso blanco llanero y salsa tártara de la casa.",
+      "price": 1.60,
+      "prep": 10,
+      "img": "perro_real.jpg",
+      "tags": ["popular"],
+      "badge": "Más Pedido"
+    },
+    {
+      "id": "perro-jumbo",
+      "cat": "perros",
+      "name": "Perro Jumbo Con Todo Caraqueño",
+      "desc": "Salchicha jumbo polaca, doble tocineta, maíz dulce, lluvia de papitas, queso llanero nevado, queso amarillo fundido y baño de salsas callejeras (ajo, tártara y maíz).",
+      "price": 2.00,
+      "prep": 12,
+      "img": "perro_real.jpg",
+      "tags": ["popular", "pico"],
+      "badge": "Favorito R.B."
+    },
+    {
+      "id": "burger-clasica",
+      "cat": "hamburguesas",
+      "name": "Hamburguesa Clásica de Carne",
+      "desc": "Carne de res sazonada a la plancha, queso amarillo cheddar, jamón, lechuga fresca, tomate, cebolla, papitas crujientes y salsas de la casa.",
+      "price": 3.00,
+      "prep": 15,
+      "img": "hamburguesa_real.jpg",
+      "tags": ["popular"],
+      "badge": "Clásica $3"
+    },
+    {
+      "id": "burger-especial",
+      "cat": "hamburguesas",
+      "name": "Hamburguesa Especial La Redoma",
+      "desc": "Carne de res artesanal al grill, huevo frito a la plancha, tocineta crujiente, jamón, queso amarillo derretido, queso blanco rallado, papitas y salsa tártara.",
+      "price": 4.00,
+      "prep": 18,
+      "img": "hamburguesa_real.jpg",
+      "tags": ["popular"],
+      "badge": "Especial R.B."
+    },
+    {
+      "id": "burger-mixta",
+      "cat": "hamburguesas",
+      "name": "Hamburguesa Mixta (Carne + Pollo)",
+      "desc": "Carne de res a la plancha y pechuga de pollo marinada, doble tocineta, huevo frito, queso amarillo, vegetales frescos, lluvia de papitas y salsa tártara.",
+      "price": 4.50,
+      "prep": 20,
+      "img": "hamburguesa_real.jpg",
+      "tags": ["popular", "pico"],
+      "badge": "La Más Resuelta"
+    },
+    {
+      "id": "burger-doble",
+      "cat": "hamburguesas",
+      "name": "Hamburguesa Doble Carne Caraqueña",
+      "desc": "Doble carne de res jugosa a la plancha, triple queso amarillo, tocineta crujiente, cebolla salteada caramelizada, papitas y salsa especial.",
+      "price": 5.00,
+      "prep": 20,
+      "img": "hamburguesa_real.jpg",
+      "tags": ["familiar"],
+      "badge": "Doble Carne"
+    },
+    {
+      "id": "pepito-pollo",
+      "cat": "pepitos",
+      "name": "Pepito de Pollo Clásico",
+      "desc": "Pan baguette suave de 25 cm relleno de pollo a la plancha picadito con cebolla salteada, papitas crujientes, queso blanco rallado y salsas de la casa.",
+      "price": 4.00,
+      "prep": 18,
+      "img": "pepito.svg",
+      "tags": ["popular"]
+    },
+    {
+      "id": "pepito-carne",
+      "cat": "pepitos",
+      "name": "Pepito de Carne de Res",
+      "desc": "Lomito de res tierno picado a la plancha con cebolla caramelizada, bañado en crema de ajo, tocineta, papitas crujientes y queso llanero.",
+      "price": 4.50,
+      "prep": 18,
+      "img": "pepito.svg",
+      "tags": ["popular"]
+    },
+    {
+      "id": "pepito-mixto",
+      "cat": "pepitos",
+      "name": "Pepito Mixto Monstruo (Carne + Pollo)",
+      "desc": "Pan baguette gigante con carne y pollo a la plancha, tocineta, queso amarillo gratinado, maíz dulce, lluvia de papitas y full crema de ajo.",
+      "price": 5.00,
+      "prep": 20,
+      "img": "pepito.svg",
+      "tags": ["popular", "pico"],
+      "badge": "Gigante"
+    },
+    {
+      "id": "shawarma-pollo",
+      "cat": "shawarmas",
+      "name": "Shawarma de Pollo Caraqueño",
+      "desc": "Pan árabe enrollado con tiritas de pollo marinadas con especias orientales, lechuga, tomate, perejil fresco y crema de ajo de la casa.",
+      "price": 3.00,
+      "prep": 12,
+      "img": "shawarma.svg",
+      "tags": ["popular"]
+    },
+    {
+      "id": "shawarma-carne",
+      "cat": "shawarmas",
+      "name": "Shawarma de Carne",
+      "desc": "Pan pita tostado al grill relleno de tiras de carne sazonada, cebolla con zumaque, tomate, papitas crocantes y salsa de ajo suave.",
+      "price": 3.50,
+      "prep": 14,
+      "img": "shawarma.svg",
+      "tags": ["popular"]
+    },
+    {
+      "id": "shawarma-mixto",
+      "cat": "shawarmas",
+      "name": "Shawarma Mixto Especial",
+      "desc": "Combinación perfecta de carne y pollo marinados, doble salsa de ajo, vegetales frescos y papitas crujientes dentro del enrollado.",
+      "price": 4.00,
+      "prep": 15,
+      "img": "shawarma.svg",
+      "tags": ["popular", "pico"],
+      "badge": "Especial"
+    },
+    {
+      "id": "refresco-lata",
+      "cat": "bebidas",
+      "name": "Refresco en Lata (355 ml)",
+      "desc": "Coca-Cola, Pepsi, Chinotto, Frescolita o Hit bien fría de la nevera.",
+      "price": 1.00,
+      "prep": 2,
+      "img": "refresco.svg",
+      "tags": ["popular"],
+      "badge": "Bien Fría"
+    },
+    {
+      "id": "refresco-1l",
+      "cat": "bebidas",
+      "name": "Refresco 1 Litro",
+      "desc": "Botella de 1 litro fría para acompañar tu combo en el puesto.",
+      "price": 1.80,
+      "prep": 2,
+      "img": "refresco.svg",
+      "tags": ["familiar"]
+    },
+    {
+      "id": "refresco-2l",
+      "cat": "bebidas",
+      "name": "Refresco 2 Litros",
+      "desc": "Botella grande de 2 litros familiar para compartir.",
+      "price": 2.50,
+      "prep": 2,
+      "img": "refresco.svg",
+      "tags": ["familiar"]
+    },
+    {
+      "id": "jugo-naranja",
+      "cat": "bebidas",
+      "name": "Jugo Natural de Naranja (500 ml)",
+      "desc": "Zumo recién exprimido 100% natural, frío y refrescante.",
+      "price": 1.00,
+      "prep": 3,
+      "img": "jugo.svg",
+      "tags": ["natural"],
+      "badge": "Natural"
+    },
+    {
+      "id": "jugo-mora",
+      "cat": "bebidas",
+      "name": "Jugo Natural de Mora (500 ml)",
+      "desc": "Jugo natural de mora fresca, preparado al momento.",
+      "price": 1.00,
+      "prep": 3,
+      "img": "jugo.svg",
+      "tags": ["natural"],
+      "badge": "Natural"
+    }
+  ]
+}
