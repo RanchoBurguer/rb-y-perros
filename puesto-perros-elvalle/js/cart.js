@@ -1,172 +1,178 @@
 /* =========================================================
-   EL REY DE LA REDOMA — Carrito de Compras
-   Estado en memoria + persistencia en localStorage.
-   Cálculo de totales en $ USD y referencia en Bs.
+   R.B. & PERROS — Capa de Datos (Caracas, Venezuela)
+   «Pídelo y verás»
+   Puesto de Perros Calientes, Hamburguesas, Pepitos y Shawarmas
+   Redoma de la Calle 5 de Julio, Los Jardines de El Valle
    ========================================================= */
-'use strict';
 
-const Cart = (() => {
-  const KEY = 'rey-carrito-v1';
-
-  /* Estado en memoria */
-  let items = [];            // [{ id, qty }]
-  let notes = new Map();     // id -> indicaciones (ej: "sin cebolla, extra tártara")
-  let coupon = null;         // cupón aplicado
-  let zone = Object.keys(DELIVERY.zones)[0];
-
-  /* ---------- Persistencia ---------- */
-  function persist() {
-    try {
-      localStorage.setItem(KEY, JSON.stringify({
-        v: 1,
-        items,
-        coupon,
-        zone
-      }));
-    } catch (e) { /* modo incógnito */ }
-  }
-
-  function restore() {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (!raw) return;
-      const d = JSON.parse(raw);
-      if (!d || d.v !== 1) return;
-      items = (d.items || [])
-        .filter((i) => MENU.some((m) => m.id === i.id))
-        .map((i) => ({ id: i.id, qty: clampQty(i.qty) }));
-      coupon = COUPONS[d.coupon] ? d.coupon : null;
-      zone = DELIVERY.zones[d.zone] !== undefined ? d.zone : zone;
-    } catch (e) { /* ignorar */ }
-  }
-
-  const clampQty = (q) => Math.max(1, Math.min(99, parseInt(q, 10) || 1));
-  const dish = (id) => MENU.find((m) => m.id === id);
-
-  /* ---------- API del Carrito ---------- */
-  const api = {
-    _subs: new Set(),
-    on(fn) { api._subs.add(fn); return () => api._subs.delete(fn); },
-    _emit() { api._subs.forEach((fn) => fn()); },
-
-    get items() { return items.slice(); },
-    get coupon() { return coupon; },
-    get zone() { return zone; },
-    setZone(z) {
-      if (DELIVERY.zones[z] === undefined) return;
-      zone = z; persist(); api._emit();
-    },
-
-    get(id) { return items.find((i) => i.id === id) || null; },
-    qty(id) { return api.get(id)?.qty ?? 0; },
-
-    add(id, n = 1) {
-      if (!dish(id)) return false;
-      const line = items.find((i) => i.id === id);
-      if (line) line.qty = clampQty(line.qty + n);
-      else items.push({ id, qty: clampQty(n) });
-      persist(); api._emit();
-      return true;
-    },
-
-    setQty(id, n) {
-      const line = items.find((i) => i.id === id);
-      if (!line) return;
-      const q = clampQty(n);
-      if (q <= 1) return api.remove(id);
-      line.qty = q;
-      persist(); api._emit();
-    },
-
-    remove(id) {
-      items = items.filter((i) => i.id !== id);
-      notes.delete(id);
-      persist(); api._emit();
-    },
-
-    clear() { items = []; notes.clear(); coupon = null; persist(); api._emit(); },
-
-    setNote(id, text) { notes.set(id, text.slice(0, 200)); api._emit(); },
-    getNote(id) { return notes.get(id) || ''; },
-
-    count() { return items.reduce((n, i) => n + i.qty, 0); },
-
-    lines() {
-      return items
-        .map((i) => ({ dish: dish(i.id), qty: i.qty, note: notes.get(i.id) || '' }))
-        .filter((l) => l.dish);
-    },
-
-    /* ---------- Cálculo de Totales ($ y Bs.) ---------- */
-    totals() {
-      const subtotal = api.lines().reduce((s, l) => s + (l.dish.price * l.qty), 0);
-
-      // Tarifa de delivery por barrio
-      const zoneFee = DELIVERY.zones[zone] ?? 0;
-      let shipping = (DELIVERY.fee || 0) + zoneFee;
-
-      // Descuentos por cupón
-      let discount = 0;
-      let freeShip = subtotal >= DELIVERY.freeFrom;
-      const c = coupon ? COUPONS[coupon] : null;
-      if (c) {
-        if (c.type === 'percent') discount = Number(((subtotal * c.value) / 100).toFixed(2));
-        if (c.type === 'fixed')   discount = Math.min(c.value, subtotal);
-        if (c.type === 'shipping') freeShip = true;
-      }
-      discount = Math.min(discount, subtotal);
-
-      if (freeShip) shipping = 0;
-
-      const totalUSD = Math.max(0, subtotal - discount + shipping);
-      const totalBs = totalUSD * (APP.tasaBCV || 50.00);
-
-      return {
-        subtotal,
-        discount,
-        iva: 0, // En el puesto de perros callejero no hay IVA colombiano
-        shipping,
-        freeShip,
-        zoneFee,
-        total: totalUSD,
-        totalBs: totalBs,
-        minOrder: DELIVERY.minOrder,
-        belowMin: subtotal < DELIVERY.minOrder,
-        freeFrom: DELIVERY.freeFrom,
-        missingForFree: Math.max(0, DELIVERY.freeFrom - subtotal)
-      };
-    },
-
-    /* ---------- Cupones ---------- */
-    applyCoupon(code) {
-      const c = (code || '').trim().toUpperCase();
-      if (!COUPONS[c]) return { ok: false, msg: 'Ese código no es válido.' };
-      coupon = c;
-      persist(); api._emit();
-      return { ok: true, msg: COUPONS[c].label };
-    },
-    removeCoupon() { coupon = null; persist(); api._emit(); },
-
-    /* ---------- Perfil del cliente (guardar en dispositivo) ---------- */
-    saveProfile(p) {
-      try {
-        localStorage.setItem('rey-perfil', JSON.stringify(p));
-      } catch (e) {}
-    },
-    loadProfile() {
-      try { return JSON.parse(localStorage.getItem('rey-perfil')) || null; }
-      catch (e) { return null; }
-    },
-
-    wipe() {
-      ['rey-carrito-v1', 'rey-perfil', 'rey-tema'].forEach((k) => {
-        try { localStorage.removeItem(k); } catch (e) {}
-      });
-      items = []; notes.clear(); coupon = null;
-      api._emit();
+/* Cargar configuración personalizada guardada por el Admin desde localStorage */
+const savedConfig = (() => {
+  try {
+    const raw = JSON.parse(localStorage.getItem('rey-config') || '{}');
+    if (raw && (raw.brand?.includes('Sabor') || raw.nit)) {
+      localStorage.removeItem('rey-config');
+      return {};
     }
-  };
+    return raw;
+  } catch (e) {
+    return {};
+  }
+})();
 
-  restore();
-  return api;
+const APP = {
+  brand: savedConfig.brand || 'R.B. & Perros',
+  slogan: '«Pídelo y verás»',
+  legalName: 'R.B. & Perros',
+  nit: '',
+  rif: 'V-24.166.249-8',
+  tagline: savedConfig.tagline || '«Pídelo y verás» · Perros Calientes, Hamburguesas, Pepitos y Shawarmas',
+  city: 'Caracas, Venezuela',
+  address: savedConfig.address || 'Redoma de la Calle 5 de Julio, Los Jardines de El Valle',
+  puestoRef: 'Puesto callejero en la redoma de la Calle 5 de Julio',
+  /* Formato internacional WhatsApp para wa.me sin + ni espacios */
+  whatsapp: savedConfig.whatsapp || '584241662498',
+  phoneDisplay: savedConfig.phoneDisplay || '0424-1662498',
+  hours: savedConfig.hours || '5:00 p.m. – 2:00 a.m. (Martes a Domingo)',
+  
+  /* Tasa de cambio (USD a Bs) configurable y sincronizada con DolarApi */
+  tasaBCV: Number(savedConfig.tasaBCV) || 875.65,
+
+  /* Datos para Pago Móvil en Venezuela */
+  pagoMovil: {
+    banco: savedConfig.pmBanco || 'Banesco (0134) o Banco de Venezuela (0102)',
+    telefono: savedConfig.pmTelefono || '0424-1662498',
+    cedula: savedConfig.pmCedula || 'V-24.166.249',
+    titular: savedConfig.pmTitular || 'R.B. & Perros'
+  }
+};
+
+/* ---------- Modalidad / Retiro en el Puesto (Delivery Próximamente) ---------- */
+const DELIVERY = {
+  fee: 0,            // Sin recargo de retiro
+  freeFrom: 999999,  // Delivery en pausa
+  minOrder: 1.14,    // pedido mínimo: al menos un perro caliente ($1.14 ~ 1000 Bs)
+  eta: '10 – 20 min',
+  deliveryStatus: 'Próximamente',
+  pickupOnly: true,
+  coverage: [
+    'Retiro en el Puesto (Redoma Calle 5 de Julio)'
+  ],
+  zones: {
+    'Retiro en el Puesto (Redoma Calle 5 de Julio)': 0.00
+  }
+};
+
+/* ---------- Métodos de pago en Venezuela ---------- */
+const PAYMENTS = [
+  {
+    id: 'pagomovil',
+    name: 'Pago Móvil (Bs.)',
+    desc: 'Banesco / BDV / Mercantil a la tasa oficial del día',
+    icon: 'phone',
+    note: 'Recomendado'
+  },
+  {
+    id: 'efectivo_usd',
+    name: 'Efectivo Divisas ($ USD)',
+    desc: 'Pagas con billetes en $ al retirar',
+    icon: 'cash',
+    note: 'Indicar en notas si necesitas vuelto'
+  },
+  {
+    id: 'efectivo_bs',
+    name: 'Efectivo Bolívares (Bs.)',
+    desc: 'Billetes en efectivo en Bs al retirar en el puesto',
+    icon: 'cash',
+    note: 'Al cambio de la tasa oficial'
+  },
+  {
+    id: 'punto',
+    name: 'Punto de Venta / Biopago',
+    desc: 'Tarjeta de débito en el puesto',
+    icon: 'card',
+    note: 'Válido para Retiro en el Puesto'
+  }
+];
+
+/* ---------- Cupones / Promociones ---------- */
+const COUPONS = {
+  VALLE10:        { type: 'percent',  value: 10,   label: '10% de descuento en tu orden' },
+  COMBORB:        { type: 'fixed',    value: 0.50, label: '$0.50 de descuento especial R.B. & Perros' }
+};
+
+/* ---------- Categorías del Puesto ---------- */
+const CATEGORIES = [
+  { id: 'todos',        name: 'Todo el menú' },
+  { id: 'perros',       name: '🌭 Perros' },
+  { id: 'hamburguesas', name: '🍔 Hamburguesas' }
+];
+
+/* ---------- Menú por defecto (Plan B si no hay menu.json) ---------- */
+let MENU = [
+  /* --- 1. Perros Calientes (Disponibles) --- */
+  {
+    id: 'perro-clasico',
+    cat: 'perros',
+    name: 'Perro Caliente Normal Caraqueño',
+    desc: 'Salchicha vienesa en pan suave al vapor, cebollita picada, repollo fresco, lluvia de papitas crujientes, queso blanco llanero rallado y salsas tradicionales.',
+    price: 1.14,
+    prep: 8,
+    img: 'perro_real.jpg',
+    tags: ['popular'],
+    badge: 'Disponible · 1.000 Bs.',
+    disponible: true
+  },
+
+  /* --- 2. Hamburguesas (Disponibles) --- */
+  {
+    id: 'burger-clasica',
+    cat: 'hamburguesas',
+    name: 'Hamburguesa Normal de Carne',
+    desc: 'Carne de res sazonada a la plancha, queso amarillo cheddar, jamón, lechuga fresca, tomate, cebolla, papitas crujientes y salsas de la casa.',
+    price: 3.00,
+    prep: 12,
+    img: 'hamburguesa_real.jpg',
+    tags: ['popular'],
+    badge: 'Disponible · $3.00',
+    disponible: true
+  }
+];
+
+/* ---------- Utilidades de Formato Monetario ($ USD y Bs.) ---------- */
+const moneyUSD = (n) => `$${Number(n || 0).toFixed(2)}`;
+
+const moneyBs = (n, tasa = null) => {
+  const currentTasa = tasa !== null ? Number(tasa) : (Number(APP.tasaBCV) || 875.65);
+  const bs = Number(n || 0) * currentTasa;
+  return `Bs. ${bs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+};
+
+const money = (n) => moneyUSD(n);
+const moneyDual = (n) => `${moneyUSD(n)} · ${moneyBs(n)}`;
+
+/* Etiquetas legibles */
+const TAG_LABELS = {
+  'popular': 'Favorito',
+  'pico': 'Con Todo',
+  'familiar': 'Para Compartir',
+  'natural': '100% Natural'
+};
+
+/* ---------- Seguridad Criptográfica del Admin (PBKDF2 + SHA-256) ---------- */
+const DEFAULT_SECURITY = {
+  salt: 'c1a5e78b94df45e0',
+  hash: '22c3d730fa26c18b855af569067696bd64c958a8990760444e08a5903b1109ed', // ñadminkirito2026.
+  username: 'kiritoapt2',
+  iterations: 100000,
+  maxAttempts: 5,
+  lockoutMinutes: 15
+};
+
+const SECURITY = (() => {
+  try {
+    const custom = JSON.parse(localStorage.getItem('rey-security') || '{}');
+    return { ...DEFAULT_SECURITY, ...custom };
+  } catch (e) {
+    return DEFAULT_SECURITY;
+  }
 })();
