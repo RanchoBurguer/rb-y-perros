@@ -187,7 +187,10 @@
       <div class="field">
         <input type="number" id="cfgTasa" placeholder=" " step="0.01" min="1" required>
         <label for="cfgTasa">Tasa de Cambio BCV (Bolívares por Dólar)</label>
-        <small class="hint">Ej: 50.00 · Todos los precios en Bs. se calcularán con esta tasa.</small>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+          <small class="hint">Todos los precios en Bs. se calculan con esta tasa.</small>
+          <button type="button" class="btn btn--sm btn--ghost" id="btnSyncBcvLive" style="padding:4px 10px; font-size:.8rem;">🔄 Sincronizar BCV Oficial Hoy</button>
+        </div>
       </div>
 
       <div class="field">
