@@ -1,21 +1,21 @@
 {
-  "version": 1,
+  "version": 2,
   "generado": "2026-10-09",
   "negocio": {
     "nombre": "R.B. & Perros",
     "eslogan": "«Pídelo y verás»",
-    "subtitulo": "«Pídelo y verás» · Perros Calientes, Hamburguesas y Bebidas",
+    "subtitulo": "«Pídelo y verás» · Perros Calientes y Hamburguesas",
     "ubicacion": "Redoma de la Calle 5 de Julio, Los Jardines de El Valle, Caracas",
     "whatsapp": "584241662498",
     "tasaBCV": 875.65
   },
-  "total": 10,
+  "total": 2,
   "dishes": [
     {
       "id": "perro-clasico",
       "cat": "perros",
       "name": "Perro Caliente Normal Caraqueño",
-      "desc": "Salchicha vienesa en pan suave al vapor, cebollita picada, repollo fresco, lluvia de papitas crujientes, queso blanco llanero rallado y salsas tradicionales.",
+      "desc": "Salchicha polaca, pan suave al vapor, cebolla, repollo, queso blanco, papitas y salsas tradicionales.",
       "price": 1.14,
       "prep": 8,
       "img": "perro_real.jpg",
@@ -27,109 +27,13 @@
       "id": "burger-clasica",
       "cat": "hamburguesas",
       "name": "Hamburguesa Normal de Carne",
-      "desc": "Carne de res sazonada a la plancha, queso amarillo cheddar, jamón, lechuga fresca, tomate, cebolla, papitas crujientes y salsas de la casa.",
+      "desc": "Carne de res, queso blanco, jamón, tomate, cebolla, papitas, huevo y salsas tradicionales.",
       "price": 3.00,
       "prep": 12,
       "img": "hamburguesa_real.jpg",
       "tags": ["popular"],
       "badge": "Disponible · $3.00",
       "disponible": true
-    },
-    {
-      "id": "refresco-lata",
-      "cat": "bebidas",
-      "name": "Refresco Frío en Lata (355 ml)",
-      "desc": "Coca-Cola, Pepsi, Chinotto, Frescolita o Hit bien fría de la nevera.",
-      "price": 1.00,
-      "prep": 2,
-      "img": "refresco.svg",
-      "tags": ["popular"],
-      "badge": "Bien Fría",
-      "disponible": true
-    },
-    {
-      "id": "jugo-natural",
-      "cat": "bebidas",
-      "name": "Jugo Natural Frío (500 ml)",
-      "desc": "Jugo natural de parchita o mora bien frío y refrescante.",
-      "price": 1.00,
-      "prep": 3,
-      "img": "jugo.svg",
-      "tags": ["natural"],
-      "badge": "100% Natural",
-      "disponible": true
-    },
-    {
-      "id": "perro-especial",
-      "cat": "perros",
-      "name": "Perro Especial con Tocineta y Maíz",
-      "desc": "Salchicha especial, tocineta crujiente, maíz tierno dulce, queso amarillo fundido y salsa tártara.",
-      "price": 1.60,
-      "prep": 10,
-      "img": "perro_real.jpg",
-      "tags": ["popular"],
-      "badge": "¡Próximamente!",
-      "disponible": false
-    },
-    {
-      "id": "perro-jumbo",
-      "cat": "perros",
-      "name": "Perro Jumbo Con Todo Caraqueño",
-      "desc": "Salchicha jumbo polaca, doble tocineta, maíz dulce, lluvia de papitas y full queso llanero.",
-      "price": 2.00,
-      "prep": 12,
-      "img": "perro_real.jpg",
-      "tags": ["popular", "pico"],
-      "badge": "¡Próximamente!",
-      "disponible": false
-    },
-    {
-      "id": "burger-especial",
-      "cat": "hamburguesas",
-      "name": "Hamburguesa Especial La Redoma",
-      "desc": "Carne de res, huevo frito a la plancha, tocineta crujiente, jamón y queso amarillo derretido.",
-      "price": 4.00,
-      "prep": 15,
-      "img": "hamburguesa_real.jpg",
-      "tags": ["popular"],
-      "badge": "¡Próximamente!",
-      "disponible": false
-    },
-    {
-      "id": "burger-doble",
-      "cat": "hamburguesas",
-      "name": "Hamburguesa Doble Carne",
-      "desc": "Doble carne jugosa a la plancha, triple queso amarillo, tocineta crujiente y cebolla salteada.",
-      "price": 5.00,
-      "prep": 18,
-      "img": "hamburguesa_real.jpg",
-      "tags": ["familiar"],
-      "badge": "¡Próximamente!",
-      "disponible": false
-    },
-    {
-      "id": "pepito-mixto",
-      "cat": "pepitos",
-      "name": "Pepito Mixto Monstruo (Carne + Pollo)",
-      "desc": "Pan baguette de 25 cm relleno de carne y pollo a la plancha, tocineta, queso amarillo y full crema de ajo.",
-      "price": 5.00,
-      "prep": 20,
-      "img": "pepito.svg",
-      "tags": ["popular"],
-      "badge": "¡Próximamente!",
-      "disponible": false
-    },
-    {
-      "id": "shawarma-pollo",
-      "cat": "shawarmas",
-      "name": "Shawarma de Pollo Caraqueño",
-      "desc": "Pan árabe enrollado con pollo marinado, vegetales frescos y crema de ajo casera.",
-      "price": 3.00,
-      "prep": 12,
-      "img": "shawarma.svg",
-      "tags": ["popular"],
-      "badge": "¡Próximamente!",
-      "disponible": false
     }
   ]
 }
