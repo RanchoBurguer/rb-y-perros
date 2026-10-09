@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es-VE" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Seguro · R.B. & Perros — «Pídelo y verás»</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+</head>
+<body class="admin">
+
+<!-- ===================== 1. PANTALLA DE ACCESO SEGURO (LOCK SCREEN) ===================== -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-card glass">
+    <div class="lock-badge">
+      <span class="badge__dot"></span> Acceso Privado
+    </div>
+    <div style="margin: 0 auto 16px; width: 72px; height: 72px;">
+      <img src="assets/logo.svg" alt="R.B. & Perros" style="width: 100%; height: 100%; border-radius: 50%; object-fit: contain; box-shadow: 0 0 20px rgba(229, 9, 20, .5);">
+    </div>
+    <h2>R.B. & Perros</h2>
+    <p style="color: var(--a2); font-weight: 700; font-size: .95rem; margin-bottom: 6px;">«Pídelo y verás»</p>
+    <p><small>Redoma de la Calle 5 de Julio, Los Jardines de El Valle</small></p>
+
+    <form id="lockForm" class="lock-form" novalidate>
+      <div class="field">
+        <input type="password" id="lockPin" placeholder=" " required autocomplete="current-password" autofocus>
+        <label for="lockPin">PIN o Contraseña Maestra</label>
+      </div>
+      <button type="submit" class="btn btn--primary btn--full" id="lockBtn">
+        <span>Desbloquear Panel</span>
+      </button>
+      <p class="lock-error" id="lockError" hidden></p>
+      <div class="lock-hint">
+        <small>🔐 Seguridad criptográfica militar PBKDF2 + SHA-256 (100.000 iteraciones).</small>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== 2. INTERFAZ DE ADMINISTRACIÓN ===================== -->
+<div id="adminPanel" style="display: none; height: 100vh; overflow: hidden; display: none;">
+
+  <!-- Barra superior -->
+  <header class="abar">
+    <div class="abar__brand">
+      <img src="assets/logo.svg" alt="R.B. & Perros" class="brand__logo-img">
+      <div>
+        <strong>R.B. & Perros · «Pídelo y verás»</strong>
+        <small>Redoma de la Calle 5 de Julio · El Valle, Caracas</small>
+      </div>
+    </div>
+
+    <div class="abar__acts">
+      <span class="pill pill--tasa" id="pillTasa">Tasa: Bs. 50.00 / $</span>
+      <span class="pill" id="pillFuente">cargando…</span>
+      <button class="btn btn--sm btn--ghost" id="btnAjustes">⚙️ Ajustes y Tasa</button>
+      <button class="btn btn--sm btn--ghost" id="btnChangePass">🔑 Cambiar Clave</button>
+      <button class="btn btn--sm btn--ghost" id="btnPreview" onclick="window.open('index.html', '_blank')">👁️ Ver la Web</button>
+      <button class="btn btn--sm btn--primary" id="btnExport">💾 Guardar para Cloudflare ↓</button>
+      <button class="btn btn--sm btn--danger" id="btnLogout">Cerrar Sesión</button>
+    </div>
+  </header>
+
+  <!-- Cuerpo en dos columnas -->
+  <div class="admin" style="grid-template-columns: 340px 1fr; gap: 16px; padding: 16px; height: calc(100vh - 68px); overflow: hidden;">
+
+    <!-- ============ Columna 1: lista ============ -->
+    <aside class="alist glass">
+      <div class="alist__head">
+        <h2>Platos y Bebidas <span class="pill" id="pillCount">0</span></h2>
+        <input type="search" id="alistSearch" placeholder="Buscar plato o bebida…" aria-label="Buscar platos">
+        <select id="alistCat" aria-label="Filtrar por categoría"></select>
+      </div>
+
+      <ul class="alist__list" id="alistList"></ul>
+
+      <footer class="alist__foot">
+        <button class="btn btn--sm btn--primary btn--full" id="btnNew">+ Añadir nuevo plato</button>
+        <p class="fineprint">Los cambios se aplican al instante en tu navegador.</p>
+      </footer>
+    </aside>
+
+    <!-- ============ Columna 2: formulario ============ -->
+    <main class="aform glass" id="aform">
+      <div class="aform__empty" id="aformEmpty">
+        <h2>Selecciona un plato de la lista</h2>
+        <p>Edita su precio en dólares, ingredientes o crea un plato nuevo.</p>
+      </div>
+
+      <form id="form" hidden novalidate>
+        <header class="aform__head">
+          <h2 id="formTitle">Editar plato</h2>
+          <div>
+            <button type="button" class="btn btn--sm btn--ghost" id="btnDup">Duplicar</button>
+            <button type="button" class="btn btn--sm btn--danger" id="btnDel">Eliminar</button>
+          </div>
+        </header>
+
+        <div class="agrid">
+          <div class="apro">
+            <div class="field">
+              <input type="text" id="fName" placeholder=" " required minlength="3" maxlength="70">
+              <label for="fName">Nombre del plato o bebida</label>
+              <small class="err">Mínimo 3 caracteres</small>
+            </div>
+
+            <div class="arow">
+              <label class="select select--full">
+                <span>Categoría</span>
+                <select id="fCat"></select>
+              </label>
+              <div class="field">
+                <input type="number" id="fPrice" placeholder=" " required min="0.25" max="100" step="0.25">
+                <label for="fPrice">Precio ($ USD)</label>
+                <small class="hint" id="priceBsLive" style="color:var(--a2); font-weight:700;">~ Bs. 0,00</small>
+              </div>
+              <div class="field">
+                <input type="number" id="fPrep" placeholder=" " min="1" max="120">
+                <label for="fPrep">Preparación (min)</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <input type="text" id="fDesc" placeholder=" " maxlength="250">
+              <label for="fDesc">Descripción / Ingredientes</label>
+              <small class="hint" id="descCount">0 / 250</small>
+            </div>
+
+            <fieldset class="fieldset">
+              <legend>Etiquetas</legend>
+              <div class="tglist" id="fTags"></div>
+            </fieldset>
+
+            <div class="arow">
+              <div class="field">
+                <input type="text" id="fBadge" placeholder=" " maxlength="25">
+                <label for="fBadge">Distintivo (opcional)</label>
+                <small class="hint">Ej: «Más Pedido», «Favorito del Valle», «Promo»</small>
+              </div>
+              <label class="select select--full">
+                <span>Ilustración SVG</span>
+                <select id="fImg"></select>
+              </label>
+            </div>
+
+            <details class="aadv">
+              <summary>Identificador interno (id)</summary>
+              <div class="field">
+                <input type="text" id="fId" placeholder=" " maxlength="40">
+                <label for="fId">Id único</label>
+                <small class="hint">Se genera solo del nombre.</small>
+              </div>
+            </details>
+          </div>
+
+          <!-- Vista previa en vivo -->
+          <aside class="apreview">
+            <h3>Así se ve en la web</h3>
+            <div id="previewBox"></div>
+          </aside>
+        </div>
+
+        <footer class="aform__foot">
+          <button type="submit" class="btn btn--primary" id="btnSave">Guardar cambios</button>
+          <button type="button" class="btn btn--ghost" id="btnCancel">Descartar</button>
+        </footer>
+      </form>
+    </main>
+
+  </div>
+</div>
+
+<!-- ===================== MODAL: AJUSTES DE NEGOCIO Y TASA BCV ===================== -->
+<div class="amodal" id="modalAjustes" role="dialog" aria-modal="true" aria-labelledby="tAjustes">
+  <div class="amodal__back" id="backAjustes"></div>
+  <div class="amodal__box glass" style="max-width: 520px;">
+    <h3 id="tAjustes">⚙️ Ajustes del Puesto y Tasa</h3>
+    <p>Estos datos se usan para calcular los precios en bolívares y enviar el pedido por WhatsApp.</p>
+
+    <form id="formAjustes" style="display:grid; gap: 14px; margin-top: 16px;">
+      <div class="field">
+        <input type="number" id="cfgTasa" placeholder=" " step="0.01" min="1" required>
+        <label for="cfgTasa">Tasa de Cambio BCV (Bolívares por Dólar)</label>
+        <small class="hint">Ej: 50.00 · Todos los precios en Bs. se calcularán con esta tasa.</small>
+      </div>
+
+      <div class="field">
+        <input type="text" id="cfgPhone" placeholder=" " required maxlength="15">
+        <label for="cfgPhone">WhatsApp de Pedidos (sin + ni espacios)</label>
+        <small class="hint">Ej: 584241662498 (formato wa.me)</small>
+      </div>
+
+      <div class="field">
+        <input type="text" id="cfgHours" placeholder=" " maxlength="60">
+        <label for="cfgHours">Horario de Atención</label>
+        <small class="hint">Ej: 5:00 p.m. – 2:00 a.m. (Martes a Domingo)</small>
+      </div>
+
+      <fieldset class="fieldset">
+        <legend>Datos para Pago Móvil (Venezuela)</legend>
+        <div style="display: grid; gap: 10px;">
+          <div class="field">
+            <input type="text" id="cfgPmBanco" placeholder=" " maxlength="60">
+            <label for="cfgPmBanco">Banco (ej: Banesco 0134 / BDV 0102)</label>
+          </div>
+          <div class="arow">
+            <div class="field">
+              <input type="text" id="cfgPmTelefono" placeholder=" " maxlength="15">
+              <label for="cfgPmTelefono">Teléfono (ej: 0424-1662498)</label>
+            </div>
+            <div class="field">
+              <input type="text" id="cfgPmCedula" placeholder=" " maxlength="15">
+              <label for="cfgPmCedula">Cédula (ej: V-24.166.249)</label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="amodal__foot">
+        <button type="button" class="btn btn--ghost btn--sm" id="cancelAjustes">Cancelar</button>
+        <button type="submit" class="btn btn--primary btn--sm">Guardar Ajustes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== MODAL: CAMBIAR CONTRASEÑA ===================== -->
+<div class="amodal" id="modalPass" role="dialog" aria-modal="true" aria-labelledby="tPass">
+  <div class="amodal__back" id="backPass"></div>
+  <div class="amodal__box glass" style="max-width: 440px;">
+    <h3 id="tPass">🔑 Cambiar Contraseña Maestra</h3>
+    <p>Se creará un nuevo hash criptográfico PBKDF2 con 100.000 iteraciones.</p>
+
+    <form id="formPass" style="display:grid; gap: 14px; margin-top: 16px;">
+      <div class="field">
+        <input type="password" id="oldPass" placeholder=" " required autocomplete="current-password">
+        <label for="oldPass">Contraseña actual</label>
+      </div>
+      <div class="field">
+        <input type="password" id="newPass" placeholder=" " required minlength="4" autocomplete="new-password">
+        <label for="newPass">Nueva contraseña o PIN (mínimo 4 caracteres)</label>
+      </div>
+      <div class="field">
+        <input type="password" id="confirmPass" placeholder=" " required minlength="4" autocomplete="new-password">
+        <label for="confirmPass">Confirmar nueva contraseña</label>
+      </div>
+
+      <div class="amodal__foot">
+        <button type="button" class="btn btn--ghost btn--sm" id="cancelPass">Cancelar</button>
+        <button type="submit" class="btn btn--primary btn--sm">Actualizar Clave</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== MODAL: GUARDAR PARA CLOUDFLARE ===================== -->
+<div class="amodal" id="saveModal" role="dialog" aria-modal="true" aria-labelledby="saveTitle">
+  <div class="amodal__back" id="saveBack"></div>
+  <div class="amodal__box glass" style="max-width: 500px;">
+    <h3 id="saveTitle">🚀 Publicar en Cloudflare Pages</h3>
+    <p>Tus cambios ya se aplicaron en este navegador. Para que <strong>todos los clientes en internet</strong> vean los nuevos precios en Cloudflare Pages:</p>
+    <ol class="steps-mini">
+      <li>Haz clic en <strong>Descargar menu.json</strong> abajo.</li>
+      <li>Copia ese archivo en la carpeta de tu sitio web (reemplazando el <code>menu.json</code> anterior).</li>
+      <li>Sube el archivo a tu repositorio de GitHub o arrástralo en tu panel de Cloudflare Pages.</li>
+      <li>¡Listo! Tu menú en Cloudflare Pages se actualizará al instante en todo el mundo.</li>
+    </ol>
+    <div class="amodal__foot">
+      <button class="btn btn--ghost btn--sm" id="saveCancel">Cerrar</button>
+      <button class="btn btn--primary btn--sm" id="saveConfirm">Descargar menu.json</button>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="js/data.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
