@@ -104,6 +104,8 @@ async function syncDolarApi() {
     }
     const bcvWrap = $('#bcvBadge');
     if (bcvWrap) bcvWrap.setAttribute('data-rate', tasaFormatted);
+    const ctaTasaEl = $('#ctaTasaVal');
+    if (ctaTasaEl) ctaTasaEl.textContent = `Bs. ${tasaFormatted} por $`;
   };
 
   updateUI(APP.tasaBCV);
@@ -1370,21 +1372,96 @@ function paintBadge() {
 Cart.on(paintBadge);
 paintBadge();
 
-/* ============ 15. Enlaces de WhatsApp directos ============ */
+/* ============ 15. Enlaces de WhatsApp directos y Tarjetas de Información ============ */
+function renderCtaInfo() {
+  const container = $('#ctaInfo');
+  if (!container) return;
+
+  const now = new Date();
+  const day = now.getDay();
+  const hour = now.getHours();
+  const min = now.getMinutes();
+  let isOpen = false;
+  if (day >= 4 && day <= 6) {
+    const totalMins = hour * 60 + min;
+    if (totalMins >= (17 * 60 + 30) && totalMins <= (23 * 60 + 59)) {
+      isOpen = true;
+    }
+  }
+
+  const tasaFormatted = Number(APP.tasaBCV).toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const waLink = `https://wa.me/${APP.whatsapp}?text=${encodeURIComponent(`Hola ${APP.brand} 🔥 Quiero hacer un pedido.`)}`;
+
+  container.innerHTML = `
+    <!-- Tarjeta 1: Ubicación -->
+    <div class="cta__card">
+      <div class="cta__card-head">
+        <span class="cta__card-icon cta__card-icon--pin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </span>
+        <span class="cta__card-label">Ubicación</span>
+      </div>
+      <b class="cta__card-val">Redoma Calle 5 de Julio</b>
+      <div class="cta__card-sub">
+        <span>Los Jardines de El Valle, Caracas</span>
+        <span class="badge-mini">📍 Retiro en el Puesto</span>
+      </div>
+    </div>
+
+    <!-- Tarjeta 2: Horario -->
+    <div class="cta__card">
+      <div class="cta__card-head">
+        <span class="cta__card-icon cta__card-icon--clock">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </span>
+        <span class="cta__card-label">Horario</span>
+      </div>
+      <b class="cta__card-val">5:30 p.m. – 12:00 a.m.</b>
+      <div class="cta__card-sub">
+        <span>Jueves a Sábado</span>
+        ${isOpen ? '<span class="badge-mini badge-mini--green">🟢 Abierto ahora</span>' : '<span class="badge-mini badge-mini--red">🔴 Cerrado</span>'}
+      </div>
+    </div>
+
+    <!-- Tarjeta 3: WhatsApp -->
+    <a class="cta__card cta__card--link" href="${waLink}" target="_blank" rel="noopener noreferrer" title="Clic para escribir por WhatsApp">
+      <div class="cta__card-head">
+        <span class="cta__card-icon cta__card-icon--wa">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.3C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/></svg>
+        </span>
+        <span class="cta__card-label">Teléfono / WhatsApp</span>
+      </div>
+      <b class="cta__card-val">${APP.phoneDisplay || '0424-1662498'}</b>
+      <div class="cta__card-sub">
+        <span>Atención y pedidos</span>
+        <span class="badge-mini badge-mini--wa">Chatear directo ↗</span>
+      </div>
+    </a>
+
+    <!-- Tarjeta 4: Tasa del Día -->
+    <div class="cta__card">
+      <div class="cta__card-head">
+        <span class="cta__card-icon cta__card-icon--rate">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </span>
+        <span class="cta__card-label">Tasa del Día</span>
+      </div>
+      <b class="cta__card-val" id="ctaTasaVal">Bs. ${tasaFormatted} por $</b>
+      <div class="cta__card-sub">
+        <span class="badge-mini badge-mini--bcv">🏛️ Oficial BCV</span>
+        <span>Al cambio del día</span>
+      </div>
+    </div>
+  `;
+}
+
 (() => {
   const hello = `Hola ${APP.brand} 🔥 Quiero hacer un pedido. ¿Me pueden enviar el menú y el tiempo de entrega?`;
   const link = `https://wa.me/${APP.whatsapp}?text=${encodeURIComponent(hello)}`;
   if ($('#waHero')) $('#waHero').href = link;
   if ($('#waCta')) $('#waCta').href = link;
 
-  if ($('#ctaInfo')) {
-    $('#ctaInfo').innerHTML = [
-      ['Ubicación', APP.address],
-      ['Horario', APP.hours],
-      ['Teléfono / WhatsApp', APP.phoneDisplay || ('+58 ' + APP.whatsapp)],
-      ['Tasa del Día', `Bs. ${APP.tasaBCV.toFixed(2)} por $`]
-    ].map(([k, v]) => `<div class="cta__item"><small>${esc(k)}</small><b>${esc(v)}</b></div>`).join('');
-  }
+  renderCtaInfo();
 })();
 
 /* ============ 16. Resalte de sección en el nav ============ */
