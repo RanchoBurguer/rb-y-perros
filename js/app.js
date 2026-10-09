@@ -944,15 +944,38 @@ const Drawer = (() => {
   }
 
   function payNoteUpdate() {
-    const id = $('input[name="pago"]:checked', payBox)?.value || 'contra';
+    const id = $('input[name="pago"]:checked', payBox)?.value || 'pagomovil';
     const t = Cart.totals();
-    const notes = {
-      contra: `Llevamos datáfono. Ten listo el monto exacto: ${money(t.total)}.`,
-      transfer: `Transferencia a ${esc(APP.pagoNumero)} (${esc(APP.pagoBanco)}). Te confirmamos la recepción por este mismo chat.`,
-      pse: `Te enviamos el enlace de PSE por este mismo chat. Nunca te pedimos tu clave ni tu PIN.`,
-      tarjeta: `Te enviamos el enlace seguro de la pasarela certificada. Este sitio no procesa tarjetas ni guarda datos de pago.`
-    };
-    payNote.textContent = notes[id];
+    if (id === 'pagomovil') {
+      payNote.innerHTML = `
+        <div style="display:grid; gap:8px;">
+          <strong style="color:var(--text); font-size:.88rem; display:flex; align-items:center; gap:6px;">
+            📱 Datos para Pago Móvil (Venezuela)
+          </strong>
+          <div style="font-size:.82rem; line-height:1.55; color:var(--text); background:rgba(0,0,0,0.12); padding:10px 12px; border-radius:8px; border:1px solid var(--stroke);">
+            <div>🏦 <b>Bancos:</b> 0102 (Banco de Venezuela) / 0134 (Banesco)</div>
+            <div>🪪 <b>Cédula:</b> 27879488 (V-27.879.488)</div>
+            <div>📞 <b>Teléfono:</b> 04241662498 (0424-1662498)</div>
+            <div style="margin-top:6px; padding-top:6px; border-top:1px dashed var(--stroke); color:var(--a2); font-weight:700;">
+              💵 Monto exacto a transferir: ${moneyBs(t.total)}
+            </div>
+          </div>
+          <small style="color:var(--muted); font-size:.74rem;">Envías el pedido por WhatsApp junto con la captura o referencia del Pago Móvil para empezar a preparar tu comida.</small>
+        </div>
+      `;
+    } else if (id === 'efectivo_usd') {
+      payNote.innerHTML = `
+        <div style="font-size:.82rem; line-height:1.45; color:var(--text);">
+          💵 <b>Efectivo Divisas ($ USD):</b> Pagas <b>${money(t.total)}</b> en billetes al retirar en el puesto. Si requieres vuelto en divisas, indícalo en las notas.
+        </div>
+      `;
+    } else if (id === 'efectivo_bs') {
+      payNote.innerHTML = `
+        <div style="font-size:.82rem; line-height:1.45; color:var(--text);">
+          🇻🇪 <b>Efectivo Bolívares (Bs.):</b> Pagas en efectivo al retirar en el puesto al cambio oficial de la tasa BCV: <b>${moneyBs(t.total)}</b>.
+        </div>
+      `;
+    }
   }
 
   function payIcon(kind) {
