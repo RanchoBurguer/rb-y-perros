@@ -947,22 +947,83 @@ const Drawer = (() => {
     const id = $('input[name="pago"]:checked', payBox)?.value || 'pagomovil';
     const t = Cart.totals();
     if (id === 'pagomovil') {
+      const bsMonto = moneyBs(t.total);
       payNote.innerHTML = `
-        <div style="display:grid; gap:8px;">
-          <strong style="color:var(--text); font-size:.88rem; display:flex; align-items:center; gap:6px;">
-            📱 Datos para Pago Móvil (Venezuela)
-          </strong>
-          <div style="font-size:.82rem; line-height:1.55; color:var(--text); background:rgba(0,0,0,0.12); padding:10px 12px; border-radius:8px; border:1px solid var(--stroke);">
-            <div>🏦 <b>Bancos:</b> 0102 (Banco de Venezuela) / 0134 (Banesco)</div>
-            <div>🪪 <b>Cédula:</b> 27879488 (V-27.879.488)</div>
-            <div>📞 <b>Teléfono:</b> 04241662498 (0424-1662498)</div>
-            <div style="margin-top:6px; padding-top:6px; border-top:1px dashed var(--stroke); color:var(--a2); font-weight:700;">
-              💵 Monto exacto a transferir: ${moneyBs(t.total)}
+        <div style="display:grid; gap:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+            <strong style="color:var(--text); font-size:.88rem; display:flex; align-items:center; gap:6px;">
+              📱 Datos para Pago Móvil (Venezuela)
+            </strong>
+            <button type="button" class="btn btn--xs btn--primary" id="btnCopyPmAll" style="padding:4px 11px; font-size:.74rem; border-radius:99px; cursor:pointer;">
+              📋 Copiar Todos los Datos
+            </button>
+          </div>
+
+          <div style="font-size:.82rem; line-height:1.6; color:var(--text); background:rgba(0,0,0,0.14); padding:12px 14px; border-radius:10px; border:1px solid var(--stroke); display:grid; gap:6px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span>🏦 <b>Bancos:</b> 0102 (Venezuela) / 0134 (Banesco)</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span>🪪 <b>Cédula:</b> 27879488</span>
+              <button type="button" class="btn-copy-chip" data-copy="27879488" title="Copiar Cédula">Copiar</button>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span>📞 <b>Teléfono:</b> 04241662498</span>
+              <button type="button" class="btn-copy-chip" data-copy="04241662498" title="Copiar Teléfono">Copiar</button>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px; padding-top:6px; border-top:1px dashed var(--stroke); color:var(--a2); font-weight:700;">
+              <span>💵 <b>Monto exacto:</b> ${bsMonto}</span>
+              <button type="button" class="btn-copy-chip" data-copy="${bsMonto.replace('Bs. ', '').trim()}" title="Copiar Monto">Copiar</button>
             </div>
           </div>
           <small style="color:var(--muted); font-size:.74rem;">Envías el pedido por WhatsApp junto con la captura o referencia del Pago Móvil para empezar a preparar tu comida.</small>
         </div>
       `;
+
+      const copyText = (txt, labelBtn) => {
+        const onSuccess = () => {
+          if (labelBtn) {
+            const orig = labelBtn.textContent;
+            labelBtn.textContent = '✅ Copiado';
+            setTimeout(() => { labelBtn.textContent = orig; }, 2000);
+          }
+          if (typeof Toast !== 'undefined' && Toast.show) {
+            Toast.show('Copiado al portapapeles', 'ok');
+          }
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(onSuccess).catch(() => fallbackCopy(txt, onSuccess));
+        } else {
+          fallbackCopy(txt, onSuccess);
+        }
+      };
+
+      const fallbackCopy = (txt, cb) => {
+        const ta = document.createElement('textarea');
+        ta.value = txt;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); if (cb) cb(); } catch (e) {}
+        ta.remove();
+      };
+
+      const btnAll = $('#btnCopyPmAll', payNote);
+      if (btnAll) {
+        btnAll.addEventListener('click', () => {
+          const allText = `PAGO MÓVIL R.B. & PERROS\nBancos: 0102 (Banco de Venezuela) / 0134 (Banesco)\nCédula: 27879488\nTeléfono: 04241662498\nMonto a transferir: ${bsMonto}`;
+          copyText(allText, btnAll);
+        });
+      }
+
+      $$('.btn-copy-chip', payNote).forEach((b) => {
+        b.addEventListener('click', () => {
+          copyText(b.dataset.copy, b);
+        });
+      });
+
     } else if (id === 'efectivo_usd') {
       payNote.innerHTML = `
         <div style="font-size:.82rem; line-height:1.45; color:var(--text);">
