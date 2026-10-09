@@ -586,6 +586,7 @@ const MenuView = (() => {
           <button class="addbtn" data-add="${esc(m.id)}"
                   aria-label="Añadir ${esc(m.name)} al pedido">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            <span class="addbtn__text">Añadir</span>
           </button>` : `
           <span class="badge-soon">Próximamente</span>
           `}
@@ -645,9 +646,15 @@ const MenuView = (() => {
     if (!btn) return;
     const n = Cart.qty(id);
     btn.classList.toggle('is-added', n > 0);
+    const txt = btn.querySelector('.addbtn__text');
+    if (txt) txt.textContent = n > 0 ? 'Añadido' : 'Añadir';
     let b = btn.querySelector('.addbtn__n');
-    if (n > 0 && !b) { b = document.createElement('span'); b.className = 'addbtn__n'; btn.appendChild(b); }
-    if (b) b.textContent = n;
+    if (n > 0) {
+      if (!b) { b = document.createElement('span'); b.className = 'addbtn__n'; btn.appendChild(b); }
+      b.textContent = n;
+    } else if (b) {
+      b.remove();
+    }
   }
   const refreshItem = paintAdd;
 
@@ -672,9 +679,13 @@ const MenuView = (() => {
     const id = b.dataset.add;
     if (Cart.add(id)) {
       const m = MENU.find((x) => x.id === id);
+      b.classList.remove('is-popping');
+      void b.offsetWidth;
+      b.classList.add('is-popping');
+      setTimeout(() => b.classList.remove('is-popping'), 320);
       MenuView.refreshItem(id);          // solo esa tarjeta, no las 27
-      Toast.show(`${m.name} añadido al pedido`);
-      if (navigator.vibrate) navigator.vibrate(12);
+      Toast.show(`🛒 ${m.name} añadido. Toca "Ver pedido" abajo.`);
+      if (navigator.vibrate) navigator.vibrate([16, 32, 16]);
     }
   });
 
@@ -1438,20 +1449,52 @@ const Drawer = (() => {
 // El carrito se redibuja en cada cambio
 Cart.on(() => { if ($('#drawer').classList.contains('is-open')) Drawer.renderCart(); });
 
-/* Contador del botón de pedido */
+/* Contador del botón de pedido + Barra flotante inferior */
 function paintBadge() {
   const n = Cart.count();
   const b = $('#cartCount');
-  b.textContent = n;
-  b.dataset.empty = String(n === 0);
-  b.animate(
-    n ? [{ transform: 'scale(1)' }, { transform: 'scale(1.45)' }, { transform: 'scale(1)' }]
-      : [{ transform: 'scale(1)' }],
-    { duration: 380, easing: 'cubic-bezier(.22,1,.36,1)' }
-  );
+  if (b) {
+    b.textContent = n;
+    b.dataset.empty = String(n === 0);
+    b.animate(
+      n ? [{ transform: 'scale(1)' }, { transform: 'scale(1.45)' }, { transform: 'scale(1)' }]
+        : [{ transform: 'scale(1)' }],
+      { duration: 380, easing: 'cubic-bezier(.22,1,.36,1)' }
+    );
+  }
+
+  /* Actualizar barra flotante de pedido (estilo PedidosYa / UberEats) */
+  const floatBar = $('#cartFloatBar');
+  if (floatBar) {
+    if (n > 0) {
+      floatBar.hidden = false;
+      floatBar.classList.add('is-visible');
+      document.body.classList.add('has-cart-float');
+      const countEl = $('#floatCartCount');
+      if (countEl) countEl.textContent = n;
+      const t = Cart.totals();
+      const usdEl = $('#floatCartUsd');
+      if (usdEl) usdEl.textContent = money(t.total);
+      const bsEl = $('#floatCartBs');
+      if (bsEl) bsEl.textContent = `· ${moneyBs(t.total)}`;
+    } else {
+      floatBar.classList.remove('is-visible');
+      document.body.classList.remove('has-cart-float');
+      setTimeout(() => { if (Cart.count() === 0) floatBar.hidden = true; }, 400);
+    }
+  }
 }
 Cart.on(paintBadge);
 paintBadge();
+
+/* Abrir pedido al tocar la barra flotante */
+const floatBtn = $('#cartFloatBtn');
+if (floatBtn) {
+  floatBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    Drawer.open();
+  });
+}
 
 /* ============ 15. Enlaces de WhatsApp directos y Tarjetas de Información ============ */
 function renderCtaInfo() {
