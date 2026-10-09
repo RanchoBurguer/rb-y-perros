@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-label="Patacones y yuca frita dorados">
+  <defs>
+    <linearGradient id="fritoF" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8d98c"/><stop offset="1" stop-color="#d99b32"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="100" cy="136" rx="66" ry="7" fill="#0f172a" opacity=".12"/>
+  <!-- Patacones: plátano verde aplastado, dorado -->
+  <ellipse cx="66" cy="86" rx="34" ry="15" fill="url(#fritoF)"/>
+  <ellipse cx="66" cy="81" rx="34" ry="15" fill="#f2c45e"/>
+  <ellipse cx="66" cy="78" rx="30" ry="12" fill="#f8d98c"/>
+  <ellipse cx="112" cy="104" rx="34" ry="15" fill="url(#fritoF)"/>
+  <ellipse cx="112" cy="99" rx="34" ry="15" fill="#f2c45e"/>
+  <ellipse cx="112" cy="96" rx="30" ry="12" fill="#f8d98c"/>
+  <!-- Yuca frita en bastones -->
+  <g fill="#eab54f">
+    <rect x="132" y="56" width="11" height="40" rx="5" transform="rotate(12 137 76)"/>
+    <rect x="148" y="62" width="11" height="38" rx="5" transform="rotate(-8 153 81)"/>
+  </g>
+  <g fill="#f6d38c">
+    <rect x="135" y="60" width="6" height="30" rx="3" transform="rotate(12 138 75)"/>
+    <rect x="151" y="66" width="6" height="28" rx="3" transform="rotate(-8 154 80)"/>
+  </g>
+  <!-- Sal y ajo -->
+  <g fill="#fff" opacity=".75">
+    <circle cx="52" cy="72" r="1.8"/><circle cx="80" cy="70" r="1.8"/><circle cx="66" cy="84" r="1.6"/>
+    <circle cx="98" cy="90" r="1.8"/><circle cx="124" cy="92" r="1.8"/><circle cx="112" cy="104" r="1.6"/>
+    <circle cx="140" y="64" r="1.6"/><circle cx="155" y="70" r="1.6"/>
+  </g>
+  <g fill="#7ab648">
+    <path d="M40 62q4-8 10-9-1 7-6 10Z"/>
+  </g>
+</svg>
