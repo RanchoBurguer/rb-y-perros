@@ -1,0 +1,7 @@
+# robots.txt para R.B. & Perros (Caracas, Venezuela)
+User-agent: *
+Allow: /
+
+# Sitemap oficial
+Sitemap: https://rb-y-perros.vercel.app/sitemap.xml
+Sitemap: https://ranchoburguer.github.io/rb-y-perros/sitemap.xml

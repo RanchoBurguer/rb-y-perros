@@ -558,8 +558,11 @@ const MenuView = (() => {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5 4.3 13a4.6 4.6 0 0 1 6.5-6.5l1.2 1.2 1.2-1.2A4.6 4.6 0 0 1 19.7 13Z"/></svg>
         </button>` : ''}
         <div class="dish__img">
-          <img src="assets/platos/${esc(m.img)}" alt="${esc(m.name)}" width="200" height="150"
-               loading="lazy" decoding="async">
+          <picture>
+            <source srcset="assets/platos/${esc((m.img || '').replace(/\.(png|jpg)$/, '.webp'))}" type="image/webp">
+            <img src="assets/platos/${esc(m.img)}" alt="${esc(m.name)}" width="200" height="150"
+                 loading="lazy" decoding="async">
+          </picture>
           <span class="dish__prep" title="Tiempo de preparación">${isAvail ? m.prep + ' min' : 'Pronto'}</span>
         </div>
         <div class="dish__body">
@@ -1223,6 +1226,15 @@ const Drawer = (() => {
 
     // Enviar a la tienda
     $('#waSend').href = `https://wa.me/${APP.whatsapp}?text=${encodeURIComponent(ticket.text)}`;
+    $('#waSend').onclick = () => {
+      try {
+        window.RBAnalytics?.track('whatsapp_order_click', {
+          ticket_id: ticket.id,
+          total_usd: ticket.total,
+          items_count: (data.items || []).length
+        });
+      } catch (e) {}
+    };
 
     // Comprobante del cliente
     const receipt = buildReceipt(data, ticket);

@@ -30,6 +30,10 @@
 <!-- Privacidad y seguridad estricta: cero rastreadores, conexión a DolarApi y Google Fonts -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; connect-src 'self' https://ve.dolarapi.com; form-action 'self'; frame-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="canonical" href="https://rb-y-perros.vercel.app/">
+
+<!-- Prioridad de carga crítica LCP -->
+<link rel="preload" as="image" href="assets/platos/perro_real.webp" type="image/webp" fetchpriority="high">
 
 <!-- Google Fonts: Anton (Display Urbano) e Inter (Lectura UI) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,7 +41,46 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/styles.css">
-<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="icon" type="image/webp" href="assets/favicon.webp">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+
+<!-- Datos Estructurados Schema.org para SEO local y Google Rich Results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FastFoodRestaurant",
+  "name": "R.B. & Perros",
+  "image": "https://rb-y-perros.vercel.app/assets/og-image.jpg",
+  "@id": "https://rb-y-perros.vercel.app",
+  "url": "https://rb-y-perros.vercel.app",
+  "telephone": "+584241662498",
+  "priceRange": "$",
+  "servesCuisine": ["Venezuelan", "Street Food", "Hot Dogs", "Burgers"],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Redoma de la Calle 5 de Julio",
+    "addressLocality": "Los Jardines de El Valle, Caracas",
+    "addressRegion": "Distrito Capital",
+    "addressCountry": "VE"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 10.4682,
+    "longitude": -66.9037
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Thursday", "Friday", "Saturday"],
+      "opens": "17:30",
+      "closes": "23:59"
+    }
+  ],
+  "menu": "https://rb-y-perros.vercel.app/#menu",
+  "acceptsReservations": "False"
+}
+</script>
 
 <script>
   /* Evita el destello de tema incorrecto */
@@ -64,7 +107,10 @@
   <div class="container nav__inner glass">
     <!-- El logo tiene un detector oculto: 5 clics seguidos abren el panel de administración -->
     <a href="#inicio" class="brand" id="brandLogo" title="R.B. & Perros — «Pídelo y verás»">
-      <img src="assets/logo.svg" alt="R.B. & Perros" class="brand__logo-img">
+      <picture>
+        <source srcset="assets/logo.webp" type="image/webp">
+        <img src="assets/logo.png" alt="R.B. & Perros" class="brand__logo-img" width="40" height="40" loading="eager">
+      </picture>
       <div class="brand__info">
         <span class="brand__text">R.B. & Perros</span>
         <span class="brand__slogan">«Pídelo y verás»</span>
@@ -163,7 +209,10 @@
       <!-- Plato destacado -->
       <div class="hero__visual reveal" style="--d:260ms">
         <div class="dish-hero" data-tilt>
-          <img src="assets/platos/perro_real.jpg" alt="Perro Caliente Normal Caraqueño" width="400" height="260" loading="eager">
+          <picture>
+            <source srcset="assets/platos/perro_real.webp" type="image/webp">
+            <img src="assets/platos/perro_real.jpg" alt="Perro Caliente Normal Caraqueño" width="400" height="260" loading="eager" fetchpriority="high">
+          </picture>
           <span class="dish-hero__badge">Recomendación de la casa</span>
           <div class="dish-hero__body">
             <h2>Perro Caliente Normal</h2>
@@ -633,6 +682,7 @@
   </div>
 </div>
 
+<script src="js/analytics.js"></script>
 <script src="js/data.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/app.js"></script>

@@ -67,6 +67,7 @@ const Cart = (() => {
       if (line) line.qty = clampQty(line.qty + n);
       else items.push({ id, qty: clampQty(n) });
       persist(); api._emit();
+      try { window.RBAnalytics?.track('add_to_cart', { id, name: d.name, price: d.price, qty: n }); } catch (e) {}
       return true;
     },
 
@@ -80,9 +81,11 @@ const Cart = (() => {
     },
 
     remove(id) {
+      const d = dish(id);
       items = items.filter((i) => i.id !== id);
       notes.delete(id);
       persist(); api._emit();
+      try { window.RBAnalytics?.track('remove_from_cart', { id, name: d?.name }); } catch (e) {}
     },
 
     clear() { items = []; notes.clear(); coupon = null; persist(); api._emit(); },
