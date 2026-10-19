@@ -73,9 +73,9 @@ const Cart = (() => {
     setQty(id, n) {
       const line = items.find((i) => i.id === id);
       if (!line) return;
-      const q = clampQty(n);
-      if (q <= 1) return api.remove(id);
-      line.qty = q;
+      const num = parseInt(n, 10) || 0;
+      if (num <= 0) return api.remove(id);
+      line.qty = clampQty(num);
       persist(); api._emit();
     },
 

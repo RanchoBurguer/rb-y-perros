@@ -16,7 +16,7 @@
 ---
 
 ## 📋 Categorías del Menú
-1. **🌭 Perros Calientes:** Clásico, Especial La Redoma, Jumbo "Con Todo" caraqueño (salchicha polaca, tocineta, maíz dulce, lluvia de papitas y queso llanero nevado).
+1. **🌭 Perros Calientes:** Clásico caraqueño (salchicha polaca, lluvia de papitas crujientes y queso amarillo rallado).
 2. **🍔 Hamburguesas:** Clásica de carne, Especial La Redoma (con huevo y tocineta), Mixta res + pollo, Doble carne caraqueña.
 3. **🥖 Pepitos:** Pepito de pollo, Pepito de carne, Pepito mixto especial El Valle en pan baguette de 25cm.
 4. **🌯 Shawarmas:** Shawarma de pollo, Shawarma mixto con crema de ajo casera (Toum) y vegetales frescos.

@@ -107,8 +107,8 @@ const COUPONS = {
 /* ---------- Categorías del Puesto ---------- */
 const CATEGORIES = [
   { id: 'todos',        name: 'Todo el menú' },
-  { id: 'perros',       name: '🌭 Perros' },
-  { id: 'hamburguesas', name: '🍔 Hamburguesas' }
+  { id: 'perros',       name: 'Perros Calientes' },
+  { id: 'hamburguesas', name: 'Hamburguesas' }
 ];
 
 /* ---------- Menú por defecto (Plan B si no hay menu.json) ---------- */
@@ -118,7 +118,7 @@ let MENU = [
     id: 'perro-clasico',
     cat: 'perros',
     name: 'Perro Caliente Normal',
-    desc: 'Salchicha polaca, pan suave al vapor, cebolla, repollo, queso blanco, papitas y salsas tradicionales.',
+    desc: 'Salchicha polaca, pan suave al vapor, cebolla, repollo, queso amarillo rallado, papitas y salsas tradicionales.',
     price: 1.14,
     prep: 8,
     img: 'perro_real.jpg',
@@ -129,15 +129,27 @@ let MENU = [
 
   /* --- 2. Hamburguesas (Disponibles) --- */
   {
-    id: 'burger-clasica',
+    id: 'mini-burger-normal',
     cat: 'hamburguesas',
-    name: 'Hamburguesa Normal (Carne)',
-    desc: 'Carne de res, queso blanco, jamón, tomate, cebolla, papitas, huevo y salsas tradicionales.',
-    price: 3.00,
-    prep: 12,
-    img: 'hamburguesa_real.jpg',
+    name: 'Mini Hamburguesa Normal',
+    desc: 'Carne de res, queso amarillo, repollo, cebolla, papitas crujientes, pan Bimbo y salsas tradicionales.',
+    price: 1.37,
+    prep: 10,
+    img: 'hamburguesa_real.png',
     tags: ['popular'],
-    badge: 'Disponible · $3.00',
+    badge: 'Disponible · 1.200 Bs.',
+    disponible: true
+  },
+  {
+    id: 'mini-burger-huevo',
+    cat: 'hamburguesas',
+    name: 'Mini Hamburguesa con Huevo',
+    desc: 'Carne de res, huevo frito, queso amarillo, repollo, cebolla, papitas crujientes, pan Bimbo y salsas tradicionales.',
+    price: 1.71,
+    prep: 12,
+    img: 'hamburguesa_real.png',
+    tags: ['popular'],
+    badge: 'Disponible · 1.500 Bs.',
     disponible: true
   }
 ];

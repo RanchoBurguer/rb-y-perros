@@ -224,7 +224,9 @@ if (FINE && !REDUCED) {
 }
 
 (() => {
-  const cv = $('#particles'), ctx = cv.getContext('2d');
+  const cv = $('#particles');
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
   let w, h, dpr, pts = [];
 
   const resize = () => {
@@ -233,35 +235,23 @@ if (FINE && !REDUCED) {
     h = cv.height = innerHeight * dpr;
     cv.style.width = innerWidth + 'px';
     cv.style.height = innerHeight + 'px';
-    const n = clamp(Math.round(innerWidth / 26), 26, 80);
+    const n = clamp(Math.round(innerWidth / 35), 15, 40);
     pts = Array.from({ length: n }, () => ({
       x: Math.random() * w, y: Math.random() * h,
-      vx: (Math.random() - .5) * .3 * dpr, vy: (Math.random() - .5) * .3 * dpr,
-      r: (Math.random() * 1.4 + .5) * dpr
+      vx: (Math.random() - .5) * .2 * dpr, vy: (Math.random() - .5) * .2 * dpr,
+      r: (Math.random() * 1.2 + .4) * dpr
     }));
   };
 
   const frame = () => {
     ctx.clearRect(0, 0, w, h);
-    const c = getComputedStyle(document.documentElement).getPropertyValue('--a2').trim() || '#ffc93c';
-    const link = 132 * dpr;
-
+    const c = getComputedStyle(document.documentElement).getPropertyValue('--c-yellow').trim() || '#FFC72C';
     for (let i = 0; i < pts.length; i++) {
       const p = pts[i];
       p.x += p.vx; p.y += p.vy;
       if (p.x < 0 || p.x > w) p.vx *= -1;
       if (p.y < 0 || p.y > h) p.vy *= -1;
-
-      for (let j = i + 1; j < pts.length; j++) {
-        const q = pts[j], d = Math.hypot(p.x - q.x, p.y - q.y);
-        if (d < link) {
-          ctx.strokeStyle = c;
-          ctx.globalAlpha = (1 - d / link) * .15;
-          ctx.lineWidth = .7 * dpr;
-          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
-        }
-      }
-      ctx.globalAlpha = .34; ctx.fillStyle = c;
+      ctx.globalAlpha = .12; ctx.fillStyle = c;
       ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
     }
     ctx.globalAlpha = 1;
@@ -977,33 +967,40 @@ const Drawer = (() => {
       const bsMonto = moneyBs(t.total);
       payNote.innerHTML = `
         <div style="display:grid; gap:10px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-            <strong style="color:var(--text); font-size:.88rem; display:flex; align-items:center; gap:6px;">
-              📱 Datos para Pago Móvil (Venezuela)
-            </strong>
-            <button type="button" class="btn btn--xs btn--primary" id="btnCopyPmAll" style="padding:4px 11px; font-size:.74rem; border-radius:99px; cursor:pointer;">
-              📋 Copiar Todos los Datos
-            </button>
-          </div>
+          <div class="pm-box">
+            <div class="pm-box__head">
+              <strong class="pm-box__title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallet"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
+                <span>Datos para Pago Móvil (Venezuela)</span>
+              </strong>
+              <button type="button" class="btn btn--xs btn--primary" id="btnCopyPmAll">
+                Copiar Todos los Datos
+              </button>
+            </div>
 
-          <div style="font-size:.82rem; line-height:1.6; color:var(--text); background:rgba(0,0,0,0.14); padding:12px 14px; border-radius:10px; border:1px solid var(--stroke); display:grid; gap:6px;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span>🏦 <b>Bancos:</b> 0102 (Venezuela) / 0134 (Banesco)</span>
+            <div class="pm-box__card">
+              <div class="pm-box__row">
+                <span class="pm-label">Bancos:</span>
+                <span class="pm-val">0102 (Venezuela) / 0134 (Banesco)</span>
+              </div>
+              <div class="pm-box__row">
+                <span class="pm-label">Cédula:</span>
+                <span class="pm-val">27879488</span>
+                <button type="button" class="btn-copy-chip" data-copy="27879488" title="Copiar Cédula">Copiar</button>
+              </div>
+              <div class="pm-box__row">
+                <span class="pm-label">Teléfono:</span>
+                <span class="pm-val">04241662498</span>
+                <button type="button" class="btn-copy-chip" data-copy="04241662498" title="Copiar Teléfono">Copiar</button>
+              </div>
+              <div class="pm-box__row pm-box__row--total">
+                <span class="pm-label">Monto exacto:</span>
+                <span class="pm-val pm-val--highlight">${bsMonto}</span>
+                <button type="button" class="btn-copy-chip" data-copy="${bsMonto.replace('Bs. ', '').trim()}" title="Copiar Monto">Copiar</button>
+              </div>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span>🪪 <b>Cédula:</b> 27879488</span>
-              <button type="button" class="btn-copy-chip" data-copy="27879488" title="Copiar Cédula">Copiar</button>
-            </div>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span>📞 <b>Teléfono:</b> 04241662498</span>
-              <button type="button" class="btn-copy-chip" data-copy="04241662498" title="Copiar Teléfono">Copiar</button>
-            </div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px; padding-top:6px; border-top:1px dashed var(--stroke); color:var(--a2); font-weight:700;">
-              <span>💵 <b>Monto exacto:</b> ${bsMonto}</span>
-              <button type="button" class="btn-copy-chip" data-copy="${bsMonto.replace('Bs. ', '').trim()}" title="Copiar Monto">Copiar</button>
-            </div>
+            <small class="pm-box__hint">Envías el pedido por WhatsApp junto con el comprobante o referencia del Pago Móvil para empezar a preparar tu comida.</small>
           </div>
-          <small style="color:var(--muted); font-size:.74rem;">Envías el pedido por WhatsApp junto con la captura o referencia del Pago Móvil para empezar a preparar tu comida.</small>
         </div>
       `;
 
@@ -1011,7 +1008,7 @@ const Drawer = (() => {
         const onSuccess = () => {
           if (labelBtn) {
             const orig = labelBtn.textContent;
-            labelBtn.textContent = '✅ Copiado';
+            labelBtn.textContent = 'Copiado';
             setTimeout(() => { labelBtn.textContent = orig; }, 2000);
           }
           if (typeof Toast !== 'undefined' && Toast.show) {
@@ -1118,22 +1115,21 @@ const Drawer = (() => {
     const isRetiro = (data.zone || '').toLowerCase().includes('retiro');
 
     const text = [
-      `*🌭 NUEVO PEDIDO — ${APP.brand.toUpperCase()}*`,
-      `📍 ${APP.address}`,
-      `Orden #${id}`,
-      `━━━━━━━━━━━━━━━━━━━━`,
+      `*PEDIDO — ${APP.brand.toUpperCase()}*`,
+      `Puesto: ${APP.address}`,
+      `Orden: #${id}`,
+      `────────────────────────────`,
       `*CLIENTE*`,
       `Nombre: ${data.nombre}`,
       `Celular: ${data.tel}`,
       ``,
       `*MODALIDAD DE ENTREGA*`,
       `Modalidad: Retiro en el Puesto (Redoma Calle 5 de Julio)`,
-      `🛵 Delivery a domicilio: ¡Próximamente!`,
-      ...(data.notas ? [`Notas / Especificaciones: ${data.notas}`] : []),
+      ...(data.notas ? [`Notas: ${data.notas}`] : []),
       ``,
-      `*DETALLE DE LA ORDEN*`,
+      `*DETALLE DEL PEDIDO*`,
       items,
-      `━━━━━━━━━━━━━━━━━━━━`,
+      `────────────────────────────`,
       `Subtotal: ${money(t.subtotal)} (~ ${moneyBs(t.subtotal)})`,
       ...(t.discount ? [`Descuento (${Cart.coupon}): −${money(t.discount)}`] : []),
       `Modalidad: Retiro en el Puesto ($0.00)`,
@@ -1143,14 +1139,14 @@ const Drawer = (() => {
       `*Método de pago:* ${pay.name}`,
       ...(data.pago === 'pagomovil' ? [
         `*Datos para Pago Móvil:*`,
-        `• Banco: ${APP.pagoMovil.banco}`,
+        `• Bancos: ${APP.pagoMovil.banco}`,
         `• Teléfono: ${APP.pagoMovil.telefono}`,
         `• Cédula: ${APP.pagoMovil.cedula}`,
         `• Titular: ${APP.pagoMovil.titular}`
       ] : []),
       `*Tiempo estimado para retirar:* 10 – 20 min`,
       ``,
-      `_¡Gracias por preferir a R.B. & Perros! «Pídelo y verás» 🔥_`
+      `_R.B. & Perros · «Pídelo y verás»_`
     ].join('\n');
 
     return { id, text, total: t.total, totalBs: t.totalBs, lines, totals: t };
